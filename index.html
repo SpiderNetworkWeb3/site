@@ -1,4 +1,3 @@
-<!-- Full index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,7 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 </head>
 <body>
-
+  <!-- Particle background -->
   <div id="tsparticles"></div>
 
   <!-- Navigation -->
@@ -27,7 +26,7 @@
   <section id="hero">
     <div class="hero-content" data-aos="fade-up">
       <h1>Empowering Web3 Developers</h1>
-      <p>Spider Network is building a decentralized ecosystem of tools and dApps for developers. Developers can launch project proposals to the DAO platform, community backed projects will be eligible grants and partnerships. Supporting blockchain innovation.</p>
+      <p>Spider Network is building a decentralized ecosystem of tools and dApps for developers. Developers can launch project proposals to the DAO platform, and community-backed projects may receive grants and partnerships to support blockchain innovation.</p>
       <a href="#grants" class="cta-glow">Apply for a Grant</a>
 
       <!-- CA Box -->
@@ -38,40 +37,27 @@
       </div>
     </div>
 
-    <div class="web-bg">
-      <!-- Animated SVG -->
-      <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" stroke="#f94d1c" stroke-width="0.5">
-          <circle cx="400" cy="400" r="50"><animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" /></circle>
-          <circle cx="400" cy="400" r="100"><animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" /></circle>
-          <circle cx="400" cy="400" r="150"><animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" /></circle>
-          <line x1="400" y1="0" x2="400" y2="800" />
-          <line x1="0" y1="400" x2="800" y2="400" />
-          <line x1="100" y1="100" x2="700" y2="700" />
-          <line x1="700" y1="100" x2="100" y2="700" />
-        </g>
-      </svg>
-    </div>
-
     <!-- Scroll Arrow -->
     <div class="scroll-arrow">&#8595;</div>
   </section>
 
-  <!-- About, Ecosystem, Grants, etc. -->
-  <section id="about"><h2>About</h2><p>...</p></section>
-  <section id="ecosystem"><h2>Ecosystem</h2><p>...</p></section>
-  <section id="grants"><h2>Grants</h2><p>...</p></section>
-  <section id="partners"><h2>Partners</h2><p>...</p></section>
-  <section id="community"><h2>Community</h2><p>...</p></section>
+  <!-- Homepage Sections -->
+  <section id="about"><h2>About</h2><p>Spider Network is creating infrastructure and tools for developers to thrive in Web3, with decentralized grants, open dApp libraries, and DAO governance.</p></section>
+  <section id="ecosystem"><h2>Ecosystem</h2><p>Our growing ecosystem includes DAO tools, governance platforms, staking integrations, and developer launchpads.</p></section>
+  <section id="grants"><h2>Grants</h2><p>Submit a proposal to the Spider DAO to be considered for ecosystem development grants, marketing partnerships, and tool-building support.</p></section>
+  <section id="partners"><h2>Partners</h2><p>Spider Network collaborates with strategic DeFi, Web3 infrastructure, and developer-first platforms. Partner with us to grow together.</p></section>
+  <section id="community"><h2>Community</h2><p>Join the conversation, help shape governance, and be rewarded for contributions. The Spider community is the heartbeat of the network.</p></section>
 
   <footer>
     <p>&copy; 2025 Spider Network. All rights reserved.</p>
   </footer>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init();
+
     function copyCA() {
       const text = document.getElementById("ca-text").textContent;
       navigator.clipboard.writeText(text).then(() => {
@@ -81,6 +67,30 @@
         }, 1500);
       });
     }
+
+    tsParticles.load("tsparticles", {
+      background: { color: "transparent" },
+      fullScreen: { enable: true, zIndex: -1 },
+      particles: {
+        number: { value: 60 },
+        color: { value: "#f94d1c" },
+        shape: { type: "circle" },
+        opacity: { value: 0.3 },
+        size: { value: 2 },
+        links: {
+          enable: true,
+          distance: 150,
+          color: "#f94d1c",
+          opacity: 0.4,
+          width: 1
+        },
+        move: { enable: true, speed: 1 }
+      },
+      interactivity: {
+        events: { onhover: { enable: true, mode: "repulse" } },
+        modes: { repulse: { distance: 100 } }
+      }
+    });
   </script>
 </body>
 </html>
