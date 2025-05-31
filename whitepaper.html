@@ -3,55 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Whitepaper - Spider Network</title>
+  <title>Whitepaper | Spider Network</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <div id="tsparticles"></div>
+<header id="navbar">
+  <div class="logo">
+    <a href="index.html">
+      <img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo" class="logo-img" />
+    </a>
+  </div>
+  <nav>
+    <a href="tokenomics.html">Tokenomics</a>
+    <a href="trading.html">Trading</a>
+    <a href="whitepaper.html">Whitepaper</a>
+    <a href="dao.html">DAO Platform</a>
+  </nav>
+</header>
 
-  <header id="navbar">
-    <div class="logo"><img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo"></div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="tokenomics.html">Tokenomics</a>
-      <a href="trading.html">Trading</a>
-      <a href="whitepaper.html" class="active">Whitepaper</a>
-      <a href="dao.html">DAO Platform</a>
-    </nav>
-  </header>
+<section id="whitepaper" style="padding-top: 100px;" data-aos="fade-up">
+  <h2>Spider Network Whitepaper</h2>
 
-  <section class="page-section" data-aos="fade-up">
-    <h1>Whitepaper</h1>
-    <p><strong>Mission:</strong> To empower developers and decentralize access to Web3 tools through an open-source DAO and grant-based ecosystem.</p>
-    <p><strong>Token ($$$$$):</strong> Acts as the utility and governance token. Holders can stake, vote, and earn through DAO decisions and bot revenue distributions.</p>
-    <p><strong>Revenue Model:</strong> AI-based volume bots generate revenue via trades, with a portion sent to DAO reserves and redistributed to holders and stakers.</p>
-    <p><strong>Staking & Voting:</strong> Stake $$$$$ via our DAO platform to receive 2x voting power and proportional rewards.</p>
-    <p><strong>Transparency:</strong> All proposals, treasury movements, and grants are tracked and voted on via a community-led DAO interface.</p>
-    <p><strong>Roadmap:</strong></p>
-    <ul>
-      <li>✅ Launch token and site</li>
-      <li>✅ Launch staking and DAO dApp</li>
-      <li>🔄 Live Trading Tools Integration</li>
-      <li>🔄 Grant and Proposal Systems</li>
-      <li>🔄 Full whitepaper PDF release and audit</li>
-    </ul>
-  </section>
+  <h3>Introduction</h3>
+  <p>Spider Network is a decentralized Web3 development hub focused on empowering creators, developers, and innovators by offering tools, grants, and dApps on the Sui blockchain.</p>
 
-  <footer><p>&copy; 2025 Spider Network. All rights reserved.</p></footer>
+  <h3>Mission</h3>
+  <p>To enable permissionless innovation through community-driven governance, decentralized funding, and a self-sustaining token economy.</p>
 
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
-  <script>
-    tsParticles.load("tsparticles", {
-      fullScreen: { enable: true },
-      particles: {
-        number: { value: 60 },
-        color: { value: "#f94d1c" },
-        links: { enable: true, distance: 120, color: "#f94d1c", opacity: 0.4, width: 0.7 },
-        move: { enable: true, speed: 1 },
-        size: { value: 1 },
-      }
-    });
-  </script>
+  <h3>Token Utility</h3>
+  <ul>
+    <li>Governance voting via DAO</li>
+    <li>Yield from staking via Moonbags.io</li>
+    <li>Revenue share from integrated bots</li>
+    <li>Access to premium Spider Network tools</li>
+  </ul>
+
+  <h3>Staking & Yield</h3>
+  <p>
+    Users can stake $WOLF tokens through the DAO platform for 2x voting power and to earn rewards via the Moonbags protocol. These earnings are automatically compounded unless withdrawn.
+  </p>
+
+  <h3>Revenue Sharing</h3>
+  <p>35% of bot-generated fees are distributed back to the DAO stakers. Rewards are fair, transparent, and verified on-chain.</p>
+
+  <h3>Future Integrations</h3>
+  <ul>
+    <li>Web3 Trading Dashboard</li>
+    <li>DeFi and NFT Launchpads</li>
+    <li>Cross-chain bridging tools</li>
+  </ul>
+</section>
+
+<footer>
+  <p>&copy; 2025 Spider Network. All rights reserved.</p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
 </body>
 </html>
