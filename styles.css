@@ -1,99 +1,115 @@
 /* Reset & Base */
-* {
+body, html {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0c0c0c;
+  color: #fff;
+  text-align: center;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #0e0e0e;
-  color: #f0f0f0;
-  text-align: center;
-  line-height: 1.6;
-  overflow-x: hidden;
+a {
+  color: #f94d1c;
+  text-decoration: none;
+}
+
+h1, h2, p {
+  margin: 20px auto;
+  max-width: 800px;
 }
 
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
-  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px 5%;
+  background: rgba(0, 0, 0, 0.8);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.logo img {
+header .logo img {
   height: 50px;
 }
 
 nav a {
-  color: #fff;
-  margin-left: 25px;
-  text-decoration: none;
-  font-weight: 500;
+  margin: 0 15px;
+  font-weight: bold;
   transition: color 0.3s;
 }
 
 nav a:hover {
-  color: #f94d1c;
+  color: #ffffff;
 }
 
-/* Hero Section */
 #hero {
-  position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  padding: 80px 20px 40px;
-  background: radial-gradient(ellipse at center, #1c1c1c 0%, #0e0e0e 100%);
+  justify-content: center;
+  padding: 100px 5% 50px;
+  position: relative;
+  background-color: #000;
 }
 
 .hero-content {
-  max-width: 800px;
-  margin: auto;
-  z-index: 2;
+  z-index: 10;
   position: relative;
 }
 
-.hero-content h1 {
-  font-size: 2.8em;
-  margin-bottom: 15px;
-}
-
-.hero-content p {
-  font-size: 1.2em;
-  margin-bottom: 25px;
-}
-
 .cta-glow {
-  background: #f94d1c;
-  color: white;
-  padding: 12px 30px;
-  border: none;
-  border-radius: 25px;
-  font-size: 1em;
-  cursor: pointer;
-  text-decoration: none;
-  animation: glow 2s infinite ease-in-out;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: 2px solid #f94d1c;
+  background: transparent;
+  color: #f94d1c;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: 0.3s;
 }
 
-@keyframes glow {
-  0% { box-shadow: 0 0 5px #f94d1c; }
-  50% { box-shadow: 0 0 20px #f94d1c; }
-  100% { box-shadow: 0 0 5px #f94d1c; }
+.cta-glow:hover {
+  background: #f94d1c;
+  color: #000;
+}
+
+/* CA Box */
+.ca-box {
+  margin: 25px auto 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 15px;
+  background: #1a1a1a;
+  border: 1px solid #f94d1c;
+  border-radius: 8px;
+}
+
+#copy-btn {
+  padding: 5px 10px;
+  background: #f94d1c;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+#copy-confirmation {
+  color: #0f0;
+  font-size: 1.2rem;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
 
 /* Scroll Arrow */
 .scroll-arrow {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #f94d1c;
-  animation: bounce 2s infinite;
   margin-top: 30px;
+  animation: bounce 2s infinite;
 }
 
 @keyframes bounce {
@@ -101,61 +117,17 @@ nav a:hover {
   50% { transform: translateY(10px); }
 }
 
-/* Animated Background */
-.web-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-/* CA Box */
-.ca-box {
-  margin-top: 25px;
-  background: #1c1c1c;
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 10px 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-#ca-text {
-  font-family: monospace;
-  font-size: 0.95em;
-}
-
-#copy-btn {
-  background: #f94d1c;
-  border: none;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#copy-confirmation {
-  margin-left: 10px;
-  color: #0f0;
-  font-size: 1.2em;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-/* Section Titles */
-section h2 {
-  margin-top: 60px;
-  font-size: 2em;
-  color: #f94d1c;
+/* Sections */
+section {
+  padding: 80px 5%;
+  background: #0c0c0c;
+  border-top: 1px solid #222;
 }
 
 /* Footer */
 footer {
-  padding: 40px 20px;
-  background-color: #111;
-  font-size: 0.9em;
+  padding: 20px;
+  background: #111;
+  font-size: 0.9rem;
+  color: #aaa;
 }
