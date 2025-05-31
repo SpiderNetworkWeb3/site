@@ -1,3 +1,6 @@
+/* Import Nunito font */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
 body {
   background: #0d0d17;
   color: #eaeaea;
@@ -53,6 +56,10 @@ nav a:hover {
   font-size: 3rem;
   color: #fff;
   margin-bottom: 1rem;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  padding: 0 1rem;
+  max-width: 100%;
 }
 
 .hero-content p {
@@ -123,21 +130,29 @@ section h2 {
   margin-bottom: 1rem;
   font-size: 2.4rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.3;
   text-align: center;
-  word-wrap: break-word;
-  max-width: 90vw;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  padding: 0 1rem;
   margin-left: auto;
   margin-right: auto;
-  padding: 0 1rem;
 }
 
 @media (max-width: 600px) {
+  .hero-content h1 {
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+
   section h2 {
     font-size: 1.8rem;
     line-height: 1.3;
+    padding: 0 1rem;
   }
 }
+
 footer {
   text-align: center;
   padding: 2rem;
