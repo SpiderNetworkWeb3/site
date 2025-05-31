@@ -15,14 +15,13 @@
   <!-- Navigation -->
   <header id="navbar">
     <div class="logo">
-      <img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo" class="logo-img"/>
+      <img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo" class="logo-img" />
     </div>
     <nav>
-      <a href="#about">About</a>
-      <a href="#ecosystem">Ecosystem</a>
-      <a href="#grants">Grants</a>
-      <a href="#partners">Partners</a>
-      <a href="#community">Community</a>
+      <a href="tokenomics.html">Tokenomics</a>
+      <a href="trading.html">Trading</a>
+      <a href="whitepaper.html">Whitepaper</a>
+      <a href="dao.html">DAO Platform</a>
     </nav>
   </header>
 
@@ -31,9 +30,10 @@
     <div class="hero-content" data-aos="fade-up">
       <h1>Empowering Web3 Developers</h1>
       <p>Spider Network is building a decentralized ecosystem of tools, grants, and dApps for blockchain innovation.</p>
-      <a href="#grants" class="cta-glow">Apply for a Grant</a>
+      <a href="#about" class="cta-glow">Learn More</a>
     </div>
     <div class="web-bg">
+      <!-- Inline Animated SVG -->
       <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
         <g fill="none" stroke="#f94d1c" stroke-width="0.5">
           <circle cx="400" cy="400" r="50">
@@ -52,46 +52,17 @@
         </g>
       </svg>
     </div>
-
-    <!-- Scroll Down Arrow -->
     <div class="scroll-down">
-      <a href="#about" aria-label="Scroll to About section">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f94d1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </a>
+      <span>&#x2193;</span>
     </div>
   </section>
 
-  <!-- About Section -->
-  <section id="about" class="content-section" data-aos="fade-up">
-    <h2>About</h2>
-    <p>Spider Network is a Web3 infrastructure hub focused on tools, grants, and professional development for builders in the Sui ecosystem.</p>
-  </section>
-
-  <!-- Ecosystem Section -->
-  <section id="ecosystem" class="content-section" data-aos="fade-up">
-    <h2>Ecosystem</h2>
-    <p>Our ecosystem includes dApps, developer libraries, analytics dashboards, and more — all open-source and community-driven.</p>
-  </section>
-
-  <!-- Grants Section -->
-  <section id="grants" class="content-section" data-aos="fade-up">
-    <h2>Grants</h2>
-    <p>Apply for Spider Network grants to get funding and support for your Sui-based projects.</p>
-  </section>
-
-  <!-- Partners Section -->
-  <section id="partners" class="content-section" data-aos="fade-up">
-    <h2>Partners</h2>
-    <p>We work with protocols, DAOs, and platforms to expand the reach and sustainability of Web3 innovation.</p>
-  </section>
-
-  <!-- Community Section -->
-  <section id="community" class="content-section" data-aos="fade-up">
-    <h2>Community</h2>
-    <p>Join the Spider Network community on Discord, GitHub, and Twitter to contribute and connect.</p>
-  </section>
+  <!-- Legacy Sections -->
+  <section id="about" data-aos="fade-up"><h2>About</h2><p>Spider Network is committed to supporting developers with resources, grants, and tools.</p></section>
+  <section id="ecosystem" data-aos="fade-up"><h2>Ecosystem</h2><p>Explore a growing suite of dApps and tools built by and for the community.</p></section>
+  <section id="grants" data-aos="fade-up"><h2>Grants</h2><p>Apply for support and funding to build your next big Web3 idea.</p></section>
+  <section id="partners" data-aos="fade-up"><h2>Partners</h2><p>We collaborate with forward-thinking teams and projects.</p></section>
+  <section id="community" data-aos="fade-up"><h2>Community</h2><p>Join us on our journey to decentralize innovation.</p></section>
 
   <!-- Footer -->
   <footer>
@@ -101,9 +72,12 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="script.js"></script>
   <script>
     AOS.init();
+    document.querySelector('.scroll-down').addEventListener('click', () => {
+      document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+    });
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
