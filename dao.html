@@ -7,7 +7,27 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
+</div>
+    <div class="web-bg">
+      <!-- Inline Animated SVG -->
+      <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#f94d1c" stroke-width="0.5">
+          <circle cx="400" cy="400" r="50">
+            <animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="400" cy="400" r="100">
+            <animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="400" cy="400" r="150">
+            <animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" />
+          </circle>
+          <line x1="400" y1="0" x2="400" y2="800" />
+          <line x1="0" y1="400" x2="800" y2="400" />
+          <line x1="100" y1="100" x2="700" y2="700" />
+          <line x1="700" y1="100" x2="100" y2="700" />
+        </g>
+      </svg>
+    </div>
 <header id="navbar">
   <div class="logo">
     <a href="index.html">
@@ -31,7 +51,7 @@
   <p>
     <strong>Current Features in Development:</strong>
     <ul>
-      <li>Staking $WOLF via Moonbags with 2x voting power</li>
+      <li>Staking $ via Moonbags with 2x voting power</li>
       <li>Client-side vote storage (optionally GitHub-integrated)</li>
       <li>Wallet connect via Sui Wallet Kit</li>
       <li>Governance dashboards and proposal voting</li>
@@ -45,7 +65,9 @@
   <p>&copy; 2025 Spider Network. All rights reserved.</p>
 </footer>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init();</script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="script.js"></script>
+  <script>
 </body>
 </html>
