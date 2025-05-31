@@ -3,48 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trading | Spider Network</title>
+  <title>Trading - Spider Network</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <div class="web-bg">
-    <!-- Spider Web Animation -->
-    <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-      <g fill="none" stroke="#f94d1c" stroke-width="0.5">
-        <circle cx="400" cy="400" r="50"><animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite"/></circle>
-        <circle cx="400" cy="400" r="100"><animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite"/></circle>
-        <circle cx="400" cy="400" r="150"><animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite"/></circle>
-      </g>
-    </svg>
-  </div>
+  <div id="tsparticles"></div>
 
   <header id="navbar">
-    <div class="logo"><img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Logo"></div>
+    <div class="logo"><img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo"></div>
     <nav>
+      <a href="index.html">Home</a>
       <a href="tokenomics.html">Tokenomics</a>
-      <a href="trading.html">Trading</a>
+      <a href="trading.html" class="active">Trading</a>
       <a href="whitepaper.html">Whitepaper</a>
       <a href="dao.html">DAO Platform</a>
     </nav>
   </header>
 
-  <section>
-    <h1>Trading</h1>
+  <section class="page-section" data-aos="fade-up">
+    <h1>Trading Interface</h1>
     <div class="ca-box">
       <span id="ca-text">0x1234...dead</span>
       <button id="copy-btn" onclick="copyCA()">Copy</button>
       <span id="copy-confirmation">&#10004;</span>
     </div>
 
-    <p>You will soon be able to trade $$$$$ directly on this page.</p>
-    <p>Staking via Moonbags will also be integrated here.</p>
-    <p>Stay tuned for live trading and liquidity metrics.</p>
+    <p>Direct trading integration coming soon using Web3 or WebSocket APIs.</p>
+    <p>Meanwhile, you can interact with our partners here:</p>
+    <ul class="link-list">
+      <li><a href="https://moonbags.io" target="_blank">Stake via Moonbags</a></li>
+      <li><a href="https://lstfi.app" target="_blank">LST Staking</a></li>
+      <li><a href="https://dexscreener.com" target="_blank">View on Dexscreener</a></li>
+    </ul>
   </section>
 
-  <footer><p>&copy; 2025 Spider Network</p></footer>
+  <footer><p>&copy; 2025 Spider Network. All rights reserved.</p></footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script>
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: true },
+      particles: {
+        number: { value: 60 },
+        color: { value: "#f94d1c" },
+        links: { enable: true, distance: 120, color: "#f94d1c", opacity: 0.4, width: 0.7 },
+        move: { enable: true, speed: 1 },
+        size: { value: 1 },
+      }
+    });
+
     function copyCA() {
       const text = document.getElementById("ca-text").textContent;
       navigator.clipboard.writeText(text).then(() => {
