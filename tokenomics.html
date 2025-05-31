@@ -8,59 +8,55 @@
 </head>
 <body>
 
-<header id="navbar">
-  <div class="logo">
-    <a href="index.html">
-      <img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo" class="logo-img" />
-    </a>
+  <div class="web-bg">
+    <!-- Spider Web Animation -->
+    <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#f94d1c" stroke-width="0.5">
+        <circle cx="400" cy="400" r="50"><animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite"/></circle>
+        <circle cx="400" cy="400" r="100"><animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite"/></circle>
+        <circle cx="400" cy="400" r="150"><animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
   </div>
-  <nav>
-    <a href="tokenomics.html">Tokenomics</a>
-    <a href="trading.html">Trading</a>
-    <a href="whitepaper.html">Whitepaper</a>
-    <a href="dao.html">DAO Platform</a>
-  </nav>
-</header>
 
-<section id="tokenomics" style="padding-top: 100px;" data-aos="fade-up">
-  <h2>Tokenomics</h2>
-  <p>This page displays live token data and a breakdown of Spider Network's $$$$$ token economy.</p>
+  <header id="navbar">
+    <div class="logo"><img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Logo"></div>
+    <nav>
+      <a href="tokenomics.html">Tokenomics</a>
+      <a href="trading.html">Trading</a>
+      <a href="whitepaper.html">Whitepaper</a>
+      <a href="dao.html">DAO Platform</a>
+    </nav>
+  </header>
 
-  <h3>Live Stats</h3>
-  <ul>
-    <li><strong>Total Supply:</strong> 1,000,000,000 $$$$$</li>
-    <li><strong>Circulating Supply:</strong> [LIVE DATA PLACEHOLDER]</li>
-    <li><strong>Burned:</strong> [LIVE DATA PLACEHOLDER]</li>
-    <li><strong>Locked:</strong> [LIVE DATA PLACEHOLDER]</li>
-    <li><strong>Market Cap:</strong> [LIVE DATA PLACEHOLDER]</li>
-    <li><strong>Liquidity:</strong> [LIVE DATA PLACEHOLDER]</li>
-  </ul>
+  <section>
+    <h1>Tokenomics</h1>
+    <div class="ca-box">
+      <span id="ca-text">0x1234...dead</span>
+      <button id="copy-btn" onclick="copyCA()">Copy</button>
+      <span id="copy-confirmation">&#10004;</span>
+    </div>
 
-  <h3>Token Distribution</h3>
-  <ul>
-    <li>Team Allocation: 10%</li>
-    <li>Community Rewards: 25%</li>
-    <li>Grants and Partnerships: 15%</li>
-    <li>DAO Treasury: 20%</li>
-    <li>Liquidity Pool: 30%</li>
-  </ul>
+    <p>Live token data coming soon...</p>
+    <p>Total supply: 1,000,000,000 $$$$$</p>
+    <p>Team Tokens: 10%</p>
+    <p>Burn Mechanism: Dynamic deflationary model</p>
+    <p>Fees: 1% to DAO, 1% to holders</p>
+    <p>Bot Revenue: Recycled to staking rewards & grants</p>
+  </section>
 
-  <h3>Revenue Model</h3>
-  <p>
-    Bot activity on the platform generates trading revenue, which is cycled back into the ecosystem through:
-    <ul>
-      <li>Holder rewards</li>
-      <li>Staking yield (via DAO platform)</li>
-      <li>Ongoing liquidity and development support</li>
-    </ul>
-  </p>
-</section>
+  <footer><p>&copy; 2025 Spider Network</p></footer>
 
-<footer>
-  <p>&copy; 2025 Spider Network. All rights reserved.</p>
-</footer>
-
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init();</script>
+  <script>
+    function copyCA() {
+      const text = document.getElementById("ca-text").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        document.getElementById("copy-confirmation").style.opacity = 1;
+        setTimeout(() => {
+          document.getElementById("copy-confirmation").style.opacity = 0;
+        }, 1500);
+      });
+    }
+  </script>
 </body>
 </html>
