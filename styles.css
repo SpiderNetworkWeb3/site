@@ -7,6 +7,8 @@ body, html {
   color: #fff;
   text-align: center;
   overflow-x: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 a {
@@ -24,10 +26,10 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px 5%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 10;
 }
 
 header .logo img {
@@ -51,12 +53,12 @@ nav a:hover {
   justify-content: center;
   padding: 100px 5% 50px;
   position: relative;
-  background-color: #000;
-  z-index: 1;
+  background-color: transparent;
+  z-index: 2;
 }
 
 .hero-content {
-  z-index: 10;
+  z-index: 3;
   position: relative;
 }
 
@@ -122,8 +124,10 @@ nav a:hover {
 /* Sections */
 section {
   padding: 80px 5%;
-  background: #0c0c0c;
+  background: transparent;
   border-top: 1px solid #222;
+  position: relative;
+  z-index: 2;
 }
 
 /* Footer */
@@ -132,6 +136,8 @@ footer {
   background: #111;
   font-size: 0.9rem;
   color: #aaa;
+  z-index: 2;
+  position: relative;
 }
 
 /* Particle Background */
