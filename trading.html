@@ -3,65 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trading - Spider Network</title>
+  <title>Trading | Spider Network</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <div id="tsparticles"></div>
+<header id="navbar">
+  <div class="logo">
+    <a href="index.html">
+      <img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo" class="logo-img" />
+    </a>
+  </div>
+  <nav>
+    <a href="tokenomics.html">Tokenomics</a>
+    <a href="trading.html">Trading</a>
+    <a href="whitepaper.html">Whitepaper</a>
+    <a href="dao.html">DAO Platform</a>
+  </nav>
+</header>
 
-  <header id="navbar">
-    <div class="logo"><img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo"></div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="tokenomics.html">Tokenomics</a>
-      <a href="trading.html" class="active">Trading</a>
-      <a href="whitepaper.html">Whitepaper</a>
-      <a href="dao.html">DAO Platform</a>
-    </nav>
-  </header>
+<section id="trading" style="padding-top: 100px;" data-aos="fade-up">
+  <h2>Trading Interface</h2>
+  <p>A real-time Web3 trading UI will be embedded here using WebSocket or Cetus API integration (coming soon).</p>
 
-  <section class="page-section" data-aos="fade-up">
-    <h1>Trading Interface</h1>
-    <div class="ca-box">
-      <span id="ca-text">0x1234...dead</span>
-      <button id="copy-btn" onclick="copyCA()">Copy</button>
-      <span id="copy-confirmation">&#10004;</span>
-    </div>
+  <h3>Current Integration Targets:</h3>
+  <ul>
+    <li><strong>LST Staking</strong> — <a href="#">Visit Site</a></li>
+    <li><strong>Moonbag Staking</strong> — <a href="#">Visit Moonbags.io</a></li>
+    <li><strong>Cetus DEX</strong> — <a href="#">Visit Cetus</a></li>
+  </ul>
 
-    <p>Direct trading integration coming soon using Web3 or WebSocket APIs.</p>
-    <p>Meanwhile, you can interact with our partners here:</p>
-    <ul class="link-list">
-      <li><a href="https://moonbags.io" target="_blank">Stake via Moonbags</a></li>
-      <li><a href="https://lstfi.app" target="_blank">LST Staking</a></li>
-      <li><a href="https://dexscreener.com" target="_blank">View on Dexscreener</a></li>
-    </ul>
-  </section>
+  <p style="margin-top:2rem;"><em>Full-featured trading widget and Sui wallet integration coming soon.</em></p>
+</section>
 
-  <footer><p>&copy; 2025 Spider Network. All rights reserved.</p></footer>
+<footer>
+  <p>&copy; 2025 Spider Network. All rights reserved.</p>
+</footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
-  <script>
-    tsParticles.load("tsparticles", {
-      fullScreen: { enable: true },
-      particles: {
-        number: { value: 60 },
-        color: { value: "#f94d1c" },
-        links: { enable: true, distance: 120, color: "#f94d1c", opacity: 0.4, width: 0.7 },
-        move: { enable: true, speed: 1 },
-        size: { value: 1 },
-      }
-    });
-
-    function copyCA() {
-      const text = document.getElementById("ca-text").textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        document.getElementById("copy-confirmation").style.opacity = 1;
-        setTimeout(() => {
-          document.getElementById("copy-confirmation").style.opacity = 0;
-        }, 1500);
-      });
-    }
-  </script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
 </body>
 </html>
