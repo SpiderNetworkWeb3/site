@@ -8,8 +8,26 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 </head>
 <body>
-  <!-- Particle background -->
-  <div id="tsparticles"></div>
+  <!-- Animated Spiderweb SVG Background -->
+  <div class="web-bg">
+    <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#f94d1c" stroke-width="0.5">
+        <circle cx="400" cy="400" r="50">
+          <animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="400" cy="400" r="100">
+          <animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="400" cy="400" r="150">
+          <animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" />
+        </circle>
+        <line x1="400" y1="0" x2="400" y2="800" />
+        <line x1="0" y1="400" x2="800" y2="400" />
+        <line x1="100" y1="100" x2="700" y2="700" />
+        <line x1="700" y1="100" x2="100" y2="700" />
+      </g>
+    </svg>
+  </div>
 
   <!-- Navigation -->
   <header id="navbar">
@@ -53,7 +71,6 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init();
@@ -67,30 +84,6 @@
         }, 1500);
       });
     }
-
-    tsParticles.load("tsparticles", {
-      background: { color: "transparent" },
-      fullScreen: { enable: true, zIndex: -1 },
-      particles: {
-        number: { value: 60 },
-        color: { value: "#f94d1c" },
-        shape: { type: "circle" },
-        opacity: { value: 0.3 },
-        size: { value: 2 },
-        links: {
-          enable: true,
-          distance: 150,
-          color: "#f94d1c",
-          opacity: 0.4,
-          width: 1
-        },
-        move: { enable: true, speed: 1 }
-      },
-      interactivity: {
-        events: { onhover: { enable: true, mode: "repulse" } },
-        modes: { repulse: { distance: 100 } }
-      }
-    });
   </script>
 </body>
 </html>
