@@ -1,7 +1,7 @@
 body {
   background: #0d0d17;
   color: #eaeaea;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Nunito', sans-serif;
   margin: 0;
   overflow-x: hidden;
 }
@@ -17,6 +17,7 @@ header {
   padding: 1.2rem 2rem;
   z-index: 1000;
   transition: all 0.3s ease;
+  font-family: 'Nunito', sans-serif;
 }
 
 .logo-img {
@@ -27,8 +28,9 @@ nav a {
   margin-left: 1.2rem;
   color: #f94d1c;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
   transition: color 0.2s;
+  font-family: 'Nunito', sans-serif;
 }
 
 nav a:hover {
@@ -44,6 +46,7 @@ nav a:hover {
   position: relative;
   padding-top: 4rem;
   overflow: hidden;
+  font-family: 'Nunito', sans-serif;
 }
 
 .hero-content h1 {
@@ -68,6 +71,7 @@ nav a:hover {
   font-weight: bold;
   box-shadow: 0 0 10px #f94d1c90;
   transition: all 0.3s ease;
+  font-family: 'Nunito', sans-serif;
 }
 
 .cta-glow:hover {
@@ -95,6 +99,7 @@ nav a:hover {
   color: #f94d1c;
   animation: bounce 2s infinite;
   cursor: pointer;
+  font-family: 'Nunito', sans-serif;
 }
 
 @keyframes bounce {
@@ -110,11 +115,21 @@ section {
   padding: 4rem 2rem;
   max-width: 900px;
   margin: 0 auto;
+  font-family: 'Nunito', sans-serif;
 }
 
 section h2 {
   color: #f94d1c;
   margin-bottom: 1rem;
+  font-size: 2.5rem;
+  word-break: break-word;
+}
+
+@media (max-width: 480px) {
+  section h2 {
+    font-size: 1.8rem;
+    padding: 0 10px;
+  }
 }
 
 footer {
@@ -123,4 +138,34 @@ footer {
   font-size: 0.9rem;
   background: #0a0a14;
   color: #999;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* Universal font styling for all inputs, buttons, selects, and textareas */
+input, button, select, textarea {
+  font-family: 'Nunito', sans-serif;
+}
+
+/* Optional: style form elements if needed */
+input, textarea, select {
+  background: #15151f;
+  color: #eaeaea;
+  border: 1px solid #333;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+button {
+  background: #f94d1c;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #ff5e2f;
 }
