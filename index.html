@@ -29,8 +29,10 @@
   <!-- Hero Section -->
   <section id="hero">
     <div class="hero-content" data-aos="fade-up">
-      <h1>Empowering Web3 Developers</h1>
-      <p>Spider Network is building a decentralized ecosystem of tools, grants, and dApps for blockchain innovation.</p>
+      <div class="hero-rotator">
+        <h1 id="rotating-title">Empowering Web3 Developers</h1>
+        <p id="rotating-subtitle">Spider Network is building a decentralized ecosystem of tools, grants, and dApps for blockchain innovation.</p>
+      </div>
       <a href="#about" class="cta-glow">Learn More</a>
     </div>
     <div class="web-bg">
@@ -59,11 +61,30 @@
   </section>
 
   <!-- Legacy Sections -->
-  <section id="about" data-aos="fade-up"><h2>About</h2><p>Spider Network is committed to supporting developers with resources, grants, and tools.</p></section>
-  <section id="ecosystem" data-aos="fade-up"><h2>Ecosystem</h2><p>Explore a growing suite of dApps and tools built by and for the community.</p></section>
-  <section id="grants" data-aos="fade-up"><h2>Grants</h2><p>Apply for support and funding to build your next big Web3 idea.</p></section>
-  <section id="partners" data-aos="fade-up"><h2>Partners</h2><p>We collaborate with forward-thinking teams and projects.</p></section>
-  <section id="community" data-aos="fade-up"><h2>Community</h2><p>Join us on our journey to decentralize innovation.</p></section>
+  <section id="about" data-aos="fade-up">
+    <h2>About</h2>
+    <p>Spider Network is a developer-first initiative focused on advancing decentralized technologies. We empower Web3 builders with infrastructure, tools, and guidance to foster trustless innovation. Our mission is to reduce friction and accelerate the journey from idea to dApp.</p>
+  </section>
+
+  <section id="ecosystem" data-aos="fade-up">
+    <h2>Ecosystem</h2>
+    <p>The Spider Network ecosystem includes a curated suite of dApps, smart contracts, SDKs, APIs, and staking platforms. Built on the Sui blockchain, our tools are modular and interoperable—designed to scale and integrate seamlessly into any Web3 project.</p>
+  </section>
+
+  <section id="grants" data-aos="fade-up">
+    <h2>Grants</h2>
+    <p>Our grant program provides funding, mentorship, and marketing support to projects that align with our mission. Whether you're building infrastructure, dApps, or developer tools, Spider Network can help you bring your idea to life with real-world resources.</p>
+  </section>
+
+  <section id="partners" data-aos="fade-up">
+    <h2>Partners</h2>
+    <p>We collaborate with forward-thinking protocols, DAOs, VCs, and dev studios to strengthen the foundation of Web3. Our partnerships ensure shared success, interoperability, and a mutual commitment to decentralization and innovation.</p>
+  </section>
+
+  <section id="community" data-aos="fade-up">
+    <h2>Community</h2>
+    <p>Our global community of developers, builders, and enthusiasts is the heart of Spider Network. We host hackathons, offer bounties, and foster open collaboration across platforms. Everyone is welcome—bring your passion, and let's build together.</p>
+  </section>
 
   <!-- Footer -->
   <footer>
@@ -79,6 +100,43 @@
     document.querySelector('.scroll-down').addEventListener('click', () => {
       document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
     });
+
+    // Rotating slogans
+    const slogans = [
+      {
+        title: "Empowering Web3 Developers",
+        subtitle: "Spider Network is building a decentralized ecosystem of tools, grants, and dApps for blockchain innovation."
+      },
+      {
+        title: "Fueling Decentralized Innovation",
+        subtitle: "Providing grants, tools, and community-driven support to accelerate Web3 ideas into reality."
+      },
+      {
+        title: "Build. Scale. Collaborate.",
+        subtitle: "We help developers create scalable dApps with a supportive network and open-source tooling."
+      },
+      {
+        title: "Decentralize Everything",
+        subtitle: "Join the Spider Network and shape the future of trustless, transparent technologies."
+      }
+    ];
+
+    let current = 0;
+    const titleEl = document.getElementById("rotating-title");
+    const subtitleEl = document.getElementById("rotating-subtitle");
+
+    setInterval(() => {
+      current = (current + 1) % slogans.length;
+      titleEl.style.opacity = 0;
+      subtitleEl.style.opacity = 0;
+
+      setTimeout(() => {
+        titleEl.textContent = slogans[current].title;
+        subtitleEl.textContent = slogans[current].subtitle;
+        titleEl.style.opacity = 1;
+        subtitleEl.style.opacity = 1;
+      }, 500);
+    }, 5000);
   </script>
 </body>
 </html>
