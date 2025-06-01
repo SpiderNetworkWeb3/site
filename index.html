@@ -30,11 +30,12 @@
   <section id="hero">
     <div class="hero-content" data-aos="fade-up">
       <div class="hero-rotator">
-        <h1 id="rotating-title">Empowering Web3 Developers</h1>
-        <p id="rotating-subtitle">Spider Network is building a decentralized ecosystem of tools, grants, and dApps for blockchain innovation.</p>
+        <h1 id="rotating-title" class="rotating-text">Empowering Web3 Developers</h1>
+        <p id="rotating-subtitle" class="rotating-text">Spider Network is building a decentralized ecosystem of tools, grants, and dApps for blockchain innovation.</p>
       </div>
       <a href="#about" class="cta-glow">Learn More</a>
     </div>
+
     <div class="web-bg">
       <!-- Inline Animated SVG -->
       <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
@@ -55,6 +56,7 @@
         </g>
       </svg>
     </div>
+
     <div class="scroll-down">
       <span>&#x2193;</span>
     </div>
@@ -101,7 +103,7 @@
       document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
     });
 
-    // Rotating slogans
+    // Rotating slogans with smooth fade/slide
     const slogans = [
       {
         title: "Empowering Web3 Developers",
@@ -125,18 +127,28 @@
     const titleEl = document.getElementById("rotating-title");
     const subtitleEl = document.getElementById("rotating-subtitle");
 
-    setInterval(() => {
-      current = (current + 1) % slogans.length;
+    function updateRotator() {
+      titleEl.classList.remove("fadeSlideIn");
+      subtitleEl.classList.remove("fadeSlideIn");
       titleEl.style.opacity = 0;
       subtitleEl.style.opacity = 0;
 
       setTimeout(() => {
+        current = (current + 1) % slogans.length;
         titleEl.textContent = slogans[current].title;
         subtitleEl.textContent = slogans[current].subtitle;
+
+        void titleEl.offsetWidth; // Trigger reflow
+        void subtitleEl.offsetWidth;
+
+        titleEl.classList.add("fadeSlideIn");
+        subtitleEl.classList.add("fadeSlideIn");
         titleEl.style.opacity = 1;
         subtitleEl.style.opacity = 1;
-      }, 500);
-    }, 5000);
+      }, 300);
+    }
+
+    setInterval(updateRotator, 5000);
   </script>
 </body>
 </html>
