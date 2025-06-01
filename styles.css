@@ -7,8 +7,10 @@ body {
   font-family: 'Nunito', sans-serif;
   margin: 0;
   overflow-x: hidden;
+  text-align: center;
 }
 
+/* HEADER */
 header {
   position: fixed;
   width: 100%;
@@ -20,7 +22,6 @@ header {
   padding: 1.2rem 2rem;
   z-index: 1000;
   transition: all 0.3s ease;
-  font-family: 'Nunito', sans-serif;
   box-shadow: 0 3px 10px rgba(0,0,0,0.5);
 }
 
@@ -68,17 +69,17 @@ nav a:hover::after {
   left: 0;
 }
 
+/* HERO SECTION */
 #hero {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
   height: 100vh;
   position: relative;
   padding: 6rem 1.2rem 2rem;
   overflow: hidden;
-  font-family: 'Nunito', sans-serif;
+  text-align: center;
   box-sizing: border-box;
 }
 
@@ -91,10 +92,7 @@ nav a:hover::after {
   font-size: 3rem;
   color: #fff;
   margin-bottom: 1rem;
-  word-break: break-word;
-  overflow-wrap: break-word;
   padding: 0 1rem;
-  max-width: 100%;
 }
 
 .hero-content p {
@@ -105,6 +103,7 @@ nav a:hover::after {
   padding: 0 1rem;
 }
 
+/* CTA BUTTON */
 .cta-glow {
   display: inline-block;
   padding: 0.85rem 1.7rem;
@@ -114,7 +113,6 @@ nav a:hover::after {
   font-weight: 700;
   box-shadow: 0 0 15px #f94d1caa;
   transition: all 0.3s ease;
-  font-family: 'Nunito', sans-serif;
   font-size: 1rem;
   border: none;
 }
@@ -125,6 +123,7 @@ nav a:hover::after {
   transform: scale(1.07);
 }
 
+/* BACKGROUND */
 .web-bg {
   position: absolute;
   top: 0;
@@ -136,6 +135,7 @@ nav a:hover::after {
   pointer-events: none;
 }
 
+/* SCROLL ICON */
 .scroll-down {
   position: absolute;
   bottom: 20px;
@@ -145,23 +145,18 @@ nav a:hover::after {
   color: #f94d1c;
   animation: bounce 2s infinite;
   cursor: pointer;
-  font-family: 'Nunito', sans-serif;
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateX(-50%) translateY(0);
-  }
-  50% {
-    transform: translateX(-50%) translateY(-10px);
-  }
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); }
 }
 
+/* UNIVERSAL SECTION STYLES */
 section {
   padding: 4rem 2rem;
   max-width: 900px;
   margin: 0 auto;
-  font-family: 'Nunito', sans-serif;
 }
 
 section h2 {
@@ -170,15 +165,10 @@ section h2 {
   font-size: 2.4rem;
   font-weight: 700;
   line-height: 1.3;
-  text-align: center;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  max-width: 100%;
   padding: 0 1rem;
-  margin-left: auto;
-  margin-right: auto;
 }
 
+/* RESPONSIVE STYLES */
 @media (max-width: 600px) {
   header {
     flex-direction: column;
@@ -189,7 +179,6 @@ section h2 {
   nav {
     width: 100%;
     justify-content: flex-start;
-    flex-wrap: wrap;
     gap: 0.6rem;
     margin-top: 0.5rem;
   }
@@ -228,16 +217,16 @@ section h2 {
   }
 }
 
+/* FOOTER */
 footer {
   text-align: center;
   padding: 2rem;
   font-size: 0.9rem;
   background: #0a0a14;
   color: #999;
-  font-family: 'Nunito', sans-serif;
 }
 
-/* Universal font styling for all inputs, buttons, selects, and textareas */
+/* INPUTS & BUTTONS */
 input, button, select, textarea {
   font-family: 'Nunito', sans-serif;
 }
@@ -258,12 +247,61 @@ button {
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   font-size: 1rem;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 button:hover {
   background: linear-gradient(135deg, #ff5e2f, #ff9060);
   transform: scale(1.04);
   box-shadow: 0 0 10px #f94d1c88;
+}
+
+/* COPY-TO-CLIPBOARD BOX */
+.copy-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto;
+  padding: 1rem;
+  gap: 0.5rem;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.copy-box {
+  background: #15151f;
+  border: 1px solid #f94d1c;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.copy-box:hover {
+  background: #1f1f2d;
+  transform: scale(1.02);
+  box-shadow: 0 0 10px #f94d1c55;
+}
+
+.copy-success {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00c36d;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.copy-box.copied .copy-success {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px);
 }
