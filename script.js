@@ -77,3 +77,20 @@ tsParticles.load("tsparticles", {
   },
   detectRetina: true
 });
+
+// Hero slogan rotator logic
+const slogans = [
+  "Empowering Builders.",
+  "Web3 dApps. Real Utility.",
+  "Grants. Governance. Growth."
+];
+const rotator = document.querySelector(".rotator");
+let current = 0;
+
+function rotateSlogan() {
+  if (!rotator) return;
+  rotator.innerHTML = `<span>${slogans[current]}</span>`;
+  current = (current + 1) % slogans.length;
+}
+rotateSlogan();
+setInterval(rotateSlogan, 3000); // Every 3 seconds
