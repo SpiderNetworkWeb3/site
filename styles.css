@@ -17,40 +17,21 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: nowrap;
   padding: 1.2rem 2rem;
   z-index: 1000;
   transition: all 0.3s ease;
   font-family: 'Nunito', sans-serif;
   box-shadow: 0 3px 10px rgba(0,0,0,0.5);
-  overflow-x: auto;
-}
-
-header::-webkit-scrollbar {
-  display: none;
-}
-header {
-  scrollbar-width: none;
 }
 
 .logo-img {
   height: 40px;
-  max-width: 100%;
-  flex-shrink: 0;
 }
 
 nav {
   display: flex;
   gap: 1.2rem;
-  flex-shrink: 1;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: none;
-}
-
-nav::-webkit-scrollbar {
-  display: none;
+  flex-wrap: wrap;
 }
 
 nav a {
@@ -89,14 +70,21 @@ nav a:hover::after {
 
 #hero {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   height: 100vh;
   position: relative;
-  padding-top: 6rem;
+  padding: 6rem 1.2rem 2rem;
   overflow: hidden;
   font-family: 'Nunito', sans-serif;
+  box-sizing: border-box;
+}
+
+.hero-content {
+  max-width: 700px;
+  width: 100%;
 }
 
 .hero-content h1 {
@@ -114,27 +102,27 @@ nav a:hover::after {
   color: #ccc;
   max-width: 600px;
   margin: 0 auto 2rem;
+  padding: 0 1rem;
 }
 
 .cta-glow {
   display: inline-block;
-  padding: 0.75rem 1.6rem;
-  background: #f94d1c;
+  padding: 0.85rem 1.7rem;
+  background: linear-gradient(135deg, #f94d1c, #ff7840);
   color: white;
-  border-radius: 8px;
-  font-weight: bold;
-  box-shadow: 0 0 12px #f94d1c90, 0 0 24px #f94d1c33;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 0 15px #f94d1caa;
   transition: all 0.3s ease;
   font-family: 'Nunito', sans-serif;
-  letter-spacing: 0.5px;
-  border: 1px solid #f94d1c;
+  font-size: 1rem;
+  border: none;
 }
 
 .cta-glow:hover {
-  background: #ff5e2f;
-  box-shadow: 0 0 20px #f94d1cff, 0 0 30px #f94d1c66;
-  transform: scale(1.05);
-  border-color: #ff5e2f;
+  background: linear-gradient(135deg, #ff5e2f, #ff9060);
+  box-shadow: 0 0 25px #f94d1cff;
+  transform: scale(1.07);
 }
 
 .web-bg {
@@ -192,20 +180,51 @@ section h2 {
 }
 
 @media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  nav {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  nav a {
+    font-size: 0.95rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  #hero {
+    height: auto;
+    padding-top: 7rem;
+    padding-bottom: 3rem;
+  }
+
   .hero-content h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     line-height: 1.3;
+    padding: 0 0.5rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .cta-glow {
+    padding: 0.75rem 1.4rem;
+    font-size: 0.95rem;
   }
 
   section h2 {
     font-size: 1.8rem;
     line-height: 1.3;
     padding: 0 1rem;
-  }
-
-  nav a {
-    font-size: 0.95rem;
-    padding: 0.3rem 0.6rem;
   }
 }
 
@@ -232,20 +251,19 @@ input, textarea, select {
 }
 
 button {
-  background: #f94d1c;
+  background: linear-gradient(135deg, #f94d1c, #ff7840);
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  letter-spacing: 0.4px;
   transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 0 8px #f94d1c66;
+  font-size: 1rem;
 }
 
 button:hover {
-  background: #ff5e2f;
-  transform: scale(1.05);
-  box-shadow: 0 0 16px #f94d1c99;
+  background: linear-gradient(135deg, #ff5e2f, #ff9060);
+  transform: scale(1.04);
+  box-shadow: 0 0 10px #f94d1c88;
 }
