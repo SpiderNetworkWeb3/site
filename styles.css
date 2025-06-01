@@ -17,20 +17,40 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap;
   padding: 1.2rem 2rem;
   z-index: 1000;
   transition: all 0.3s ease;
   font-family: 'Nunito', sans-serif;
   box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+  overflow-x: auto;
+}
+
+header::-webkit-scrollbar {
+  display: none;
+}
+header {
+  scrollbar-width: none;
 }
 
 .logo-img {
   height: 40px;
+  max-width: 100%;
+  flex-shrink: 0;
 }
 
 nav {
   display: flex;
   gap: 1.2rem;
+  flex-shrink: 1;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+nav::-webkit-scrollbar {
+  display: none;
 }
 
 nav a {
@@ -98,20 +118,23 @@ nav a:hover::after {
 
 .cta-glow {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.6rem;
   background: #f94d1c;
   color: white;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: bold;
-  box-shadow: 0 0 10px #f94d1c90;
+  box-shadow: 0 0 12px #f94d1c90, 0 0 24px #f94d1c33;
   transition: all 0.3s ease;
   font-family: 'Nunito', sans-serif;
+  letter-spacing: 0.5px;
+  border: 1px solid #f94d1c;
 }
 
 .cta-glow:hover {
   background: #ff5e2f;
-  box-shadow: 0 0 20px #f94d1cff;
+  box-shadow: 0 0 20px #f94d1cff, 0 0 30px #f94d1c66;
   transform: scale(1.05);
+  border-color: #ff5e2f;
 }
 
 .web-bg {
@@ -213,13 +236,16 @@ button {
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.3s ease, transform 0.2s ease;
+  letter-spacing: 0.4px;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 8px #f94d1c66;
 }
 
 button:hover {
   background: #ff5e2f;
-  transform: scale(1.03);
+  transform: scale(1.05);
+  box-shadow: 0 0 16px #f94d1c99;
 }
