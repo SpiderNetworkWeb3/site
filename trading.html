@@ -7,62 +7,56 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
- </div>
-    <div class="web-bg">
-      <!-- Inline Animated SVG -->
-      <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" stroke="#f94d1c" stroke-width="0.5">
-          <circle cx="400" cy="400" r="50">
-            <animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="400" cy="400" r="100">
-            <animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="400" cy="400" r="150">
-            <animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" />
-          </circle>
-          <line x1="400" y1="0" x2="400" y2="800" />
-          <line x1="0" y1="400" x2="800" y2="400" />
-          <line x1="100" y1="100" x2="700" y2="700" />
-          <line x1="700" y1="100" x2="100" y2="700" />
-        </g>
-      </svg>
-    </div>
-<header id="navbar">
-  <div class="logo">
-    <a href="index.html">
-      <img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo" class="logo-img" />
-    </a>
+
+  <div class="web-bg">
+    <!-- Animated SVG -->
+    <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#f94d1c" stroke-width="0.5">
+        <circle cx="400" cy="400" r="50"><animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" /></circle>
+        <circle cx="400" cy="400" r="100"><animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" /></circle>
+        <circle cx="400" cy="400" r="150"><animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" /></circle>
+        <line x1="400" y1="0" x2="400" y2="800" />
+        <line x1="0" y1="400" x2="800" y2="400" />
+        <line x1="100" y1="100" x2="700" y2="700" />
+        <line x1="700" y1="100" x2="100" y2="700" />
+      </g>
+    </svg>
   </div>
-  <nav>
-    <a href="tokenomics.html">Tokenomics</a>
-    <a href="trading.html">Trading</a>
-    <a href="whitepaper.html">Whitepaper</a>
-    <a href="dao.html">DAO Platform</a>
-  </nav>
-</header>
 
-<section id="trading" style="padding-top: 100px;" data-aos="fade-up">
-  <h2>Trading Interface</h2>
-  <p>A real-time Web3 trading UI will be embedded here using WebSocket or Cetus API integration (coming soon).</p>
+  <header id="navbar">
+    <div class="logo">
+      <a href="index.html">
+        <img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo" class="logo-img" />
+      </a>
+    </div>
+    <nav>
+      <a href="tokenomics.html">Tokenomics</a>
+      <a href="trading.html">Trading</a>
+      <a href="whitepaper.html">Whitepaper</a>
+      <a href="dao.html">DAO Platform</a>
+    </nav>
+  </header>
 
-  <h3>Current Integration Targets:</h3>
-  <ul>
-    <li><strong>LST Staking</strong> — <a href="#">Visit Site</a></li>
-    <li><strong>Moonbag Staking</strong> — <a href="#">Visit Moonbags.io</a></li>
-    <li><strong>Cetus DEX</strong> — <a href="#">Visit Cetus</a></li>
-  </ul>
+  <section id="trading" class="section-card" data-aos="fade-up">
+    <h2>Trading Interface</h2>
+    <p>A real-time Web3 trading UI will be embedded here using WebSocket or Cetus API integration (coming soon).</p>
 
-  <p style="margin-top:2rem;"><em>Full-featured trading widget and Sui wallet integration coming soon.</em></p>
-</section>
+    <h3>Current Integration Targets:</h3>
+    <ul>
+      <li><strong>LST Staking</strong> — <a href="#">Visit Site</a></li>
+      <li><strong>Moonbag Staking</strong> — <a href="#">Visit Moonbags.io</a></li>
+      <li><strong>Cetus DEX</strong> — <a href="#">Visit Cetus</a></li>
+    </ul>
 
-<footer>
-  <p>&copy; 2025 Spider Network. All rights reserved.</p>
-</footer>
+    <p style="margin-top:2rem;"><em>Full-featured trading widget and Sui wallet integration coming soon.</em></p>
+  </section>
 
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+  <footer>
+    <p>&copy; 2025 Spider Network. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="script.js"></script>
-  <script>
 </body>
 </html>
