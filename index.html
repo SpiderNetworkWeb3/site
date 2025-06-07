@@ -10,11 +10,13 @@
   <style>
     html, body {
       scroll-behavior: smooth;
+      margin: 0;
     }
 
     #hero {
-      padding-top: calc(70px + 4rem);
+      padding-top: calc(70px + 2rem);
       min-height: 100vh;
+      margin-top: 0; /* prevent extra gap */
     }
 
     .section-card {
@@ -28,9 +30,33 @@
       transform: translateY(0);
     }
 
+    /* Animated gradient for banner text */
+    .rotating-text {
+      background: linear-gradient(135deg, #00ffa3, #9945ff, #dc1fff);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textFlow 6s ease infinite;
+    }
+
+    @keyframes textFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .fadeSlideIn {
+      animation: fadeSlideIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeSlideIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 600px) {
       #hero {
-        padding-top: calc(70px + 3rem);
+        padding-top: calc(70px + 2rem);
       }
     }
   </style>
@@ -164,6 +190,7 @@
     const subtitleEl = document.getElementById("rotating-subtitle");
 
     function updateRotator() {
+      if (!titleEl || !subtitleEl) return;
       titleEl.classList.remove("fadeSlideIn");
       subtitleEl.classList.remove("fadeSlideIn");
       titleEl.style.opacity = 0;
@@ -173,15 +200,11 @@
         current = (current + 1) % slogans.length;
         titleEl.textContent = slogans[current].title;
         subtitleEl.textContent = slogans[current].subtitle;
-
-        void titleEl.offsetWidth;
-        void subtitleEl.offsetWidth;
-
         titleEl.classList.add("fadeSlideIn");
         subtitleEl.classList.add("fadeSlideIn");
         titleEl.style.opacity = 1;
         subtitleEl.style.opacity = 1;
-      }, 300);
+      }, 200);
     }
 
     setInterval(updateRotator, 5000);
