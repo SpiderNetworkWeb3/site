@@ -13,7 +13,7 @@
     }
 
     #hero {
-      padding-top: calc(70px + 4rem); /* navbar height + spacing */
+      padding-top: calc(70px + 4rem);
       min-height: 100vh;
     }
 
@@ -64,9 +64,16 @@
     </div>
 
     <div class="web-bg">
-      <!-- Inline Animated SVG -->
+      <!-- Solana-Themed Animated SVG -->
       <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" stroke="#f94d1c" stroke-width="0.5">
+        <defs>
+          <linearGradient id="solanaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00FFA3"/>
+            <stop offset="50%" stop-color="#DC1FFF"/>
+            <stop offset="100%" stop-color="#00FFFB"/>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="url(#solanaGradient)" stroke-width="0.5">
           <circle cx="400" cy="400" r="50">
             <animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" />
           </circle>
@@ -97,7 +104,7 @@
 
   <section id="ecosystem" class="section-card" data-aos="fade-up">
     <h2>Ecosystem</h2>
-    <p>The Spider Network ecosystem includes a curated suite of dApps, smart contracts, SDKs, APIs, and staking platforms. Built on the Sui blockchain, our tools are modular and interoperable—designed to scale and integrate seamlessly into any Web3 project.</p>
+    <p>The Spider Network ecosystem includes a curated suite of dApps, smart contracts, SDKs, APIs, and staking platforms. Built on the Solana blockchain, our tools are modular and interoperable—designed to scale and integrate seamlessly into any Web3 project.</p>
   </section>
 
   <section id="grants" class="section-card" data-aos="fade-up">
