@@ -1,88 +1,63 @@
-// Animate on scroll
-AOS.init();
+// Initialize Animate On Scroll
+AOS.init({
+  duration: 800,
+  easing: 'ease-in-out',
+  once: true
+});
 
-// Shrink nav on scroll
+// Navbar shrink effect on scroll
 window.addEventListener("scroll", () => {
   const nav = document.getElementById("navbar");
   if (window.scrollY > 50) {
     nav.style.padding = "0.8rem 2rem";
-    nav.style.background = "rgba(15,15,25,0.98)";
+    nav.style.background = "rgba(11, 11, 18, 0.98)";
   } else {
     nav.style.padding = "1.2rem 2rem";
-    nav.style.background = "rgba(15,15,25,0.95)";
+    nav.style.background = "#0b0b12"; // solid to match logo background
   }
 });
 
-// Load particles
+// Load particles.js background (Solana-inspired)
 tsParticles.load("tsparticles", {
-  fullScreen: {
-    enable: true,
-    zIndex: -2
-  },
+  fullScreen: { enable: true, zIndex: -2 },
   particles: {
-    number: {
-      value: 70,
-      density: {
-        enable: true,
-        area: 800
-      }
-    },
-    color: {
-      value: "#f94d1c"
-    },
-    shape: {
-      type: "circle"
-    },
-    opacity: {
-      value: 0.5
-    },
-    size: {
-      value: 2.5
+    number: { value: 80, density: { enable: true, area: 800 } },
+    color: { value: ["#9945ff", "#19fb9b", "#00ffa3"] }, // spider-accent colors
+    shape: { type: "circle" },
+    opacity: { value: 0.4 },
+    size: { value: 2.5 },
+    links: {
+      enable: true,
+      distance: 130,
+      color: "#9945ff",
+      opacity: 0.3,
+      width: 1
     },
     move: {
       enable: true,
       speed: 1.2,
-      direction: "none",
-      outModes: {
-        default: "bounce"
-      }
-    },
-    links: {
-      enable: true,
-      distance: 140,
-      color: "#f94d1c",
-      opacity: 0.4,
-      width: 1
+      outModes: { default: "bounce" }
     }
   },
   interactivity: {
     events: {
-      onHover: {
-        enable: true,
-        mode: "repulse"
-      },
-      onClick: {
-        enable: true,
-        mode: "push"
-      }
+      onHover: { enable: true, mode: "repulse" },
+      onClick: { enable: true, mode: "push" }
     },
     modes: {
-      repulse: {
-        distance: 100
-      },
-      push: {
-        quantity: 4
-      }
+      repulse: { distance: 100 },
+      push: { quantity: 4 }
     }
   },
   detectRetina: true
 });
 
-// Hero slogan rotator logic
+// Rotating slogan logic
 const slogans = [
   "Empowering Builders.",
   "Web3 dApps. Real Utility.",
-  "Grants. Governance. Growth."
+  "Grants. Governance. Growth.",
+  "Built on Solana. Designed for Scale."
 ];
 const rotator = document.querySelector(".rotator");
 let current = 0;
@@ -93,4 +68,4 @@ function rotateSlogan() {
   current = (current + 1) % slogans.length;
 }
 rotateSlogan();
-setInterval(rotateSlogan, 3000); // Every 3 seconds
+setInterval(rotateSlogan, 3500);
