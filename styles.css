@@ -5,11 +5,12 @@ body {
   margin: 0;
   overflow-x: hidden;
   text-align: center;
-  padding-top: 90px; /* Fix navbar overlap */
 }
 
 header {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   background: linear-gradient(to right, #0e0e1a, #13131f);
   backdrop-filter: blur(10px);
@@ -72,9 +73,8 @@ nav a:hover::after {
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: 100vh;
-  position: relative;
-  padding: 8rem 1.2rem 2rem;
+  min-height: 100vh;
+  padding-top: calc(70px + 4rem); /* navbar height + visual spacing */
   overflow: hidden;
 }
 
@@ -134,7 +134,7 @@ nav a:hover::after {
   pointer-events: none;
 }
 
-/* Scroll Down Icon */
+/* Scroll Arrow */
 .scroll-down {
   position: absolute;
   bottom: 30px;
@@ -152,7 +152,7 @@ nav a:hover::after {
   50% { transform: translateX(-50%) translateY(-10px); }
 }
 
-/* Section Cards (About, Ecosystem, etc.) */
+/* Section Card Layout */
 .section-card {
   background: rgba(15, 15, 25, 0.6);
   border: 1px solid #2c2c3a;
@@ -194,13 +194,7 @@ nav a:hover::after {
   75%, 100% { transform: translateY(0); }
 }
 
-/* Content Typography */
-section {
-  padding: 4rem 2rem;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
+/* Section Typography */
 section h2 {
   color: #f94d1c;
   margin-bottom: 1rem;
@@ -221,7 +215,7 @@ section p {
   padding: 0 1rem;
 }
 
-/* Copy Address UI */
+/* Copy Box */
 .copy-box {
   background: #1c1c2a;
   border: 1px solid #333;
@@ -279,7 +273,7 @@ footer {
   color: #999;
 }
 
-/* Form Elements */
+/* Inputs and Buttons */
 input, button, select, textarea {
   font-family: 'Nunito', sans-serif;
 }
@@ -333,7 +327,7 @@ button:hover {
 
   #hero {
     height: auto;
-    padding-top: 7rem;
+    padding-top: calc(70px + 3rem);
     padding-bottom: 3rem;
   }
 
