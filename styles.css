@@ -19,7 +19,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(to right, #0e0e1a, #13131f);
+  background: #0b0b12; /* matched to logo background */
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-between;
