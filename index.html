@@ -7,6 +7,33 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <style>
+    html, body {
+      scroll-behavior: smooth;
+    }
+
+    #hero {
+      padding-top: calc(70px + 4rem); /* navbar height + spacing */
+      min-height: 100vh;
+    }
+
+    .section-card {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .section-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 600px) {
+      #hero {
+        padding-top: calc(70px + 3rem);
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -99,10 +126,13 @@
   <script src="script.js"></script>
   <script>
     AOS.init();
+
+    // Scroll to About
     document.querySelector('.scroll-down').addEventListener('click', () => {
       document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
     });
 
+    // Rotating hero text
     const slogans = [
       {
         title: "Empowering Web3 Developers",
