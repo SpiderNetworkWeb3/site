@@ -1,3 +1,10 @@
+:root {
+  --spider-accent-1: #00ffa3;
+  --spider-accent-2: #19fb9b;
+  --spider-accent-3: #9945ff;
+  --spider-accent-4: #dc1fff;
+}
+
 body {
   background: #0d0d17;
   color: #eaeaea;
@@ -33,7 +40,7 @@ nav {
 }
 
 nav a {
-  color: #f94d1c;
+  color: var(--spider-accent-3);
   text-decoration: none;
   font-weight: 700;
   font-size: 1rem;
@@ -50,13 +57,13 @@ nav a::after {
   bottom: 4px;
   width: 0;
   height: 2px;
-  background: #f94d1c;
+  background: var(--spider-accent-3);
   transition: width 0.3s ease, left 0.3s ease;
   border-radius: 2px;
 }
 
 nav a:hover {
-  background: rgba(255, 94, 47, 0.1);
+  background: rgba(153, 69, 255, 0.1);
   color: #fff;
   transform: scale(1.05);
 }
@@ -66,7 +73,6 @@ nav a:hover::after {
   left: 0;
 }
 
-/* Hero Section */
 #hero {
   display: flex;
   flex-direction: column;
@@ -74,7 +80,7 @@ nav a:hover::after {
   justify-content: center;
   text-align: center;
   min-height: 100vh;
-  padding-top: calc(70px + 4rem); /* navbar height + visual spacing */
+  padding-top: calc(70px + 4rem);
   overflow: hidden;
 }
 
@@ -84,7 +90,7 @@ nav a:hover::after {
   background: rgba(255, 255, 255, 0.02);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 0 15px rgba(249, 77, 28, 0.08);
+  box-shadow: 0 0 15px rgba(153, 69, 255, 0.08);
 }
 
 .hero-content h1 {
@@ -106,23 +112,22 @@ nav a:hover::after {
 .cta-glow {
   display: inline-block;
   padding: 0.85rem 1.7rem;
-  background: linear-gradient(135deg, #f94d1c, #ff7840);
+  background: linear-gradient(135deg, var(--spider-accent-1), var(--spider-accent-3));
   color: white;
   border-radius: 10px;
   font-weight: 700;
-  box-shadow: 0 0 15px #f94d1caa;
+  box-shadow: 0 0 15px #9945ffaa;
   transition: all 0.3s ease;
   font-size: 1rem;
   border: none;
 }
 
 .cta-glow:hover {
-  background: linear-gradient(135deg, #ff5e2f, #ff9060);
-  box-shadow: 0 0 25px #f94d1cff;
+  background: linear-gradient(135deg, var(--spider-accent-3), var(--spider-accent-4));
+  box-shadow: 0 0 25px #9945ffff;
   transform: scale(1.07);
 }
 
-/* Spider Web Background */
 .web-bg {
   position: fixed;
   top: 0;
@@ -134,14 +139,13 @@ nav a:hover::after {
   pointer-events: none;
 }
 
-/* Scroll Arrow */
 .scroll-down {
   position: absolute;
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 2rem;
-  color: #f94d1c;
+  color: var(--spider-accent-4);
   animation: bounce 2s infinite;
   cursor: pointer;
   z-index: 10;
@@ -152,7 +156,6 @@ nav a:hover::after {
   50% { transform: translateX(-50%) translateY(-10px); }
 }
 
-/* Section Card Layout */
 .section-card {
   background: rgba(15, 15, 25, 0.6);
   border: 1px solid #2c2c3a;
@@ -160,19 +163,18 @@ nav a:hover::after {
   padding: 2rem;
   margin: 2rem auto;
   max-width: 850px;
-  box-shadow: 0 0 10px rgba(249, 77, 28, 0.15);
+  box-shadow: 0 0 10px rgba(153, 69, 255, 0.15);
   transition: all 0.3s ease;
 }
 
 .section-card:hover {
-  box-shadow: 0 0 20px rgba(249, 77, 28, 0.3);
+  box-shadow: 0 0 20px rgba(153, 69, 255, 0.3);
   transform: translateY(-4px);
 }
 
-/* Rotator */
 .rotator {
   font-size: 1.5rem;
-  color: #f94d1c;
+  color: var(--spider-accent-2);
   font-weight: 600;
   height: 1.5em;
   overflow: hidden;
@@ -194,9 +196,8 @@ nav a:hover::after {
   75%, 100% { transform: translateY(0); }
 }
 
-/* Section Typography */
 section h2 {
-  color: #f94d1c;
+  color: var(--spider-accent-3);
   margin-bottom: 1rem;
   font-size: 2.4rem;
   font-weight: 700;
@@ -215,7 +216,6 @@ section p {
   padding: 0 1rem;
 }
 
-/* Copy Box */
 .copy-box {
   background: #1c1c2a;
   border: 1px solid #333;
@@ -228,18 +228,18 @@ section p {
   margin: 1.5rem auto;
   color: #fff;
   font-size: 1rem;
-  box-shadow: 0 0 8px rgba(249, 77, 28, 0.3);
+  box-shadow: 0 0 8px rgba(153, 69, 255, 0.3);
   transition: all 0.3s ease;
   width: fit-content;
 }
 
 .copy-box:hover {
-  box-shadow: 0 0 15px rgba(249, 77, 28, 0.5);
+  box-shadow: 0 0 15px rgba(153, 69, 255, 0.5);
 }
 
 .copy-box button {
   font-size: 0.9rem;
-  background: #f94d1c;
+  background: var(--spider-accent-3);
   color: white;
   border: none;
   border-radius: 6px;
@@ -249,11 +249,11 @@ section p {
 }
 
 .copy-box button:hover {
-  background: #ff7840;
+  background: var(--spider-accent-4);
 }
 
 .copy-success {
-  color: #4aff74;
+  color: #00ffcc;
   font-weight: 600;
   margin-left: 1rem;
   animation: fadeIn 0.4s ease;
@@ -264,7 +264,6 @@ section p {
   to { opacity: 1; transform: scale(1); }
 }
 
-/* Footer */
 footer {
   text-align: center;
   padding: 2rem;
@@ -273,7 +272,6 @@ footer {
   color: #999;
 }
 
-/* Inputs and Buttons */
 input, button, select, textarea {
   font-family: 'Nunito', sans-serif;
 }
@@ -287,7 +285,7 @@ input, textarea, select {
 }
 
 button {
-  background: linear-gradient(135deg, #f94d1c, #ff7840);
+  background: linear-gradient(135deg, var(--spider-accent-2), var(--spider-accent-3));
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
@@ -299,12 +297,11 @@ button {
 }
 
 button:hover {
-  background: linear-gradient(135deg, #ff5e2f, #ff9060);
+  background: linear-gradient(135deg, var(--spider-accent-4), var(--spider-accent-3));
   transform: scale(1.04);
-  box-shadow: 0 0 10px #f94d1c88;
+  box-shadow: 0 0 10px #9945ff88;
 }
 
-/* Responsive */
 @media (max-width: 600px) {
   header {
     flex-direction: column;
@@ -366,9 +363,4 @@ button:hover {
     margin: 1rem;
     padding: 1.5rem;
   }
-
-  /* Ensure top spacing below the fixed navbar on all subpages */
-  body:not(#home) section:first-of-type {
-  padding-top: 110px;
-}
 }
