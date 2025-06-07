@@ -5,69 +5,138 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DAO Platform | Spider Network</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <style>
+    .wallet-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 18px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: inline-block;
+    }
+    .connect-btn {
+      background-color: #0af;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .connect-btn:hover {
+      background-color: #08c;
+    }
+    .progress-container {
+      margin: 30px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      width: 60%;
+      height: 12px;
+      background: linear-gradient(90deg, #0af, #09f, #0af);
+      animation: progressAnim 3s infinite;
+    }
+    @keyframes progressAnim {
+      0% { width: 20%; }
+      50% { width: 80%; }
+      100% { width: 20%; }
+    }
+  </style>
 </head>
 <body>
-</div>
-    <div class="web-bg">
-      <!-- Inline Animated SVG -->
-      <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" stroke="#f94d1c" stroke-width="0.5">
-          <circle cx="400" cy="400" r="50">
-            <animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="400" cy="400" r="100">
-            <animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="400" cy="400" r="150">
-            <animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" />
-          </circle>
-          <line x1="400" y1="0" x2="400" y2="800" />
-          <line x1="0" y1="400" x2="800" y2="400" />
-          <line x1="100" y1="100" x2="700" y2="700" />
-          <line x1="700" y1="100" x2="100" y2="700" />
-        </g>
-      </svg>
-    </div>
-<header id="navbar">
-  <div class="logo">
-    <a href="index.html">
-      <img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo" class="logo-img" />
-    </a>
+  <div class="web-bg">
+    <!-- Animated Spider SVG -->
+    <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#f94d1c" stroke-width="0.5">
+        <circle cx="400" cy="400" r="50">
+          <animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="400" cy="400" r="100">
+          <animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="400" cy="400" r="150">
+          <animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" />
+        </circle>
+        <line x1="400" y1="0" x2="400" y2="800" />
+        <line x1="0" y1="400" x2="800" y2="400" />
+        <line x1="100" y1="100" x2="700" y2="700" />
+        <line x1="700" y1="100" x2="100" y2="700" />
+      </g>
+    </svg>
   </div>
-  <nav>
-    <a href="tokenomics.html">Tokenomics</a>
-    <a href="trading.html">Trading</a>
-    <a href="whitepaper.html">Whitepaper</a>
-    <a href="dao.html">DAO Platform</a>
-  </nav>
-</header>
 
-<section id="dao" style="padding-top: 100px;" data-aos="fade-up">
-  <h2>DAO Platform</h2>
-  <p>
-    Spider Network’s DAO platform is currently under development. It will allow token holders to propose and vote on governance initiatives and stake their tokens to earn proportional rewards from ecosystem revenue.
-  </p>
+  <header id="navbar">
+    <div class="logo">
+      <a href="index.html">
+        <img src="6F7CE367-A986-4349-B6A0-AA356BDB3B23.png" alt="Spider Network Logo" class="logo-img" />
+      </a>
+    </div>
+    <nav>
+      <a href="tokenomics.html">Tokenomics</a>
+      <a href="trading.html">Trading</a>
+      <a href="whitepaper.html">Whitepaper</a>
+      <a href="dao.html">DAO Platform</a>
+    </nav>
+  </header>
 
-  <p>
-    <strong>Current Features in Development:</strong>
+  <section id="dao" style="padding-top: 100px;" data-aos="fade-up">
+    <h2>DAO Platform</h2>
+    <p>
+      Spider Network’s DAO platform is currently under development. It will allow token holders to propose and vote on governance initiatives and stake their tokens to earn proportional rewards from ecosystem revenue.
+    </p>
+
+    <div id="walletConnect">
+      <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
+      <div id="walletAddress" class="wallet-box" style="display: none;"></div>
+    </div>
+
+    <p><strong>Current Features in Development:</strong></p>
     <ul>
-      <li>Staking $ via Moonbags with 2x voting power</li>
+      <li>Staking $WOLF via Moonbags with 2x voting power</li>
       <li>Client-side vote storage (optionally GitHub-integrated)</li>
       <li>Wallet connect via Sui Wallet Kit</li>
       <li>Governance dashboards and proposal voting</li>
     </ul>
-  </p>
 
-  <p><em>Stay tuned for our launch announcement. We are building something powerful for community-driven development.</em></p>
-</section>
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
 
-<footer>
-  <p>&copy; 2025 Spider Network. All rights reserved.</p>
-</footer>
+    <p><em>Stay tuned for our launch announcement. We are building something powerful for community-driven development.</em></p>
+  </section>
 
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+  <footer>
+    <p>&copy; 2025 Spider Network. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="script.js"></script>
   <script>
+    AOS.init();
+
+    async function connectWallet() {
+      try {
+        if (!window.suiWallet) {
+          alert("Sui Wallet not found. Please install the Sui Wallet extension.");
+          return;
+        }
+
+        const accounts = await window.suiWallet.requestAccounts();
+        const address = accounts[0];
+        document.getElementById('walletAddress').innerText = `Connected: ${address}`;
+        document.getElementById('walletAddress').style.display = 'block';
+      } catch (err) {
+        alert("Wallet connection failed.");
+        console.error(err);
+      }
+    }
+  </script>
 </body>
 </html>
