@@ -363,4 +363,9 @@ button:hover {
     margin: 1rem;
     padding: 1.5rem;
   }
+
+  /* Ensure top spacing below the fixed navbar on all subpages */
+body:not(#home) section:first-of-type {
+  padding-top: 100px;
+}
 }
