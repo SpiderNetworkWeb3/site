@@ -1,8 +1,13 @@
-const heliusRpcUrl = "https://mainnet.helius-rpc.com/?api-key=4a24a1d6-8411-4b75-9524-24962846e3de";
+// cleaner.js
+
+import { Connection, PublicKey } from "https://unpkg.com/@solana/web3.js@1.76.0/lib/index.iife.js";
+
+const heliusEndpoint = "https://mainnet.helius-rpc.com/?api-key=4a24a1d6-8411-4b75-9524-24962846e3de";
+const heliusAssetEndpoint = "https://api.helius.xyz/v0/addresses/";
 
 let walletPublicKey = null;
 
-// DOM refs
+// DOM Elements
 const connectButton = document.getElementById("connectWallet");
 const walletInfoDiv = document.getElementById("walletInfo");
 const solBalanceSpan = document.getElementById("solBalance");
@@ -13,80 +18,90 @@ const modal = document.getElementById("modal");
 const cancelBtn = document.getElementById("cancelBtn");
 const proceedBtn = document.getElementById("proceedBtn");
 
-// Modal logic
+// Show modal on load
 document.addEventListener("DOMContentLoaded", () => {
   modal.classList.remove("hidden");
-  cancelBtn.addEventListener("click", () => window.location.href = "index.html");
-  proceedBtn.addEventListener("click", () => modal.style.display = "none");
+
+  cancelBtn.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+
+  proceedBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
 });
 
-// Phantom deeplink or connect
+// Wallet Connect Logic
 connectButton.addEventListener("click", async () => {
-  if (!window.solana || !window.solana.isPhantom) {
-    window.open("https://phantom.app/ul/browse/" + encodeURIComponent(window.location.href), "_blank");
-    return;
-  }
   try {
+    if (!window.solana || !window.solana.isPhantom) {
+      alert("Phantom Wallet not found. Please install or open in Phantom browser.");
+      return;
+    }
+
     const resp = await window.solana.connect();
     walletPublicKey = resp.publicKey.toString();
-    console.log("Connected:", walletPublicKey);
+    console.log("Connected wallet:", walletPublicKey);
     walletInfoDiv.style.display = "block";
     fetchWalletInfo(walletPublicKey);
   } catch (err) {
-    console.error("Connection failed", err);
-    alert("Could not connect wallet.");
+    console.error("Wallet connection failed:", err);
+    alert("Could not connect to wallet.");
   }
 });
 
-// Fetch assets via JSON-RPC POST
+// Fetch Wallet Info from Helius
 async function fetchWalletInfo(address) {
   try {
-    // SOL Balance
-    const conn = new solanaWeb3.Connection(heliusRpcUrl);
-    const lamports = await conn.getBalance(new solanaWeb3.PublicKey(address));
-    solBalanceSpan.textContent = (lamports / 1e9).toFixed(3) + " SOL";
+    const connection = new Connection(heliusEndpoint);
 
-    // Helius JSON-RPC for assets
-    const body = {
-      jsonrpc: "2.0",
-      id: "1",
-      method: "getAssetsByOwner",
-      params: { ownerAddress: address, page: 1, limit: 1000 }
-    };
-    const resp = await fetch(heliusRpcUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
-    });
-    const { result } = await resp.json();
+    // Get SOL balance
+    const solBalanceLamports = await connection.getBalance(new PublicKey(address));
+    const solBalance = solBalanceLamports / 1e9;
+    solBalanceSpan.textContent = solBalance.toFixed(3) + " SOL";
 
-    const assets = result.items;
-    const tokens = assets.filter(a => a.token_info?.decimals > 0);
-    const nfts = assets.filter(a => a.token_info?.decimals === 0 && a.interface?.includes("NFT"));
+    // Get token and NFT data
+    const url = `${heliusAssetEndpoint}${address}/assets?displayOptions=compressed,unlisted&api-key=4a24a1d6-8411-4b75-9524-24962846e3de`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!data.items || !Array.isArray(data.items)) {
+      throw new Error("Unexpected data format from Helius.");
+    }
+
+    const tokens = data.items.filter(item =>
+      item.token_info && item.token_info.decimals > 0 && Number(item.token_info.balance) > 0
+    );
+
+    const nfts = data.items.filter(item =>
+      item.interface === "V1_NFT" || (item.token_info?.decimals === 0 && item.content?.metadata?.name)
+    );
 
     displayTokens(tokens);
     displayNFTs(nfts);
-    serumList.innerHTML = '<p>Serum cleanup coming soon.</p>';
-  } catch (e) {
-    console.error("Fetch error", e);
-    alert("Failed to fetch assets. Check console.");
+    displaySerumAccounts();
+  } catch (err) {
+    console.error("Fetch error:", err);
+    alert("Failed to fetch wallet data. Check console.");
   }
 }
 
+// UI Display Functions
 function displayTokens(tokens) {
   tokenList.innerHTML = '';
   if (!tokens.length) {
     tokenList.innerHTML = '<p>No SPL tokens found.</p>';
     return;
   }
-  tokens.forEach(t => {
+
+  tokens.forEach(token => {
     const div = document.createElement("div");
     div.className = "token-card";
     div.innerHTML = `
-      <strong>${t.token_info.symbol || "UNKNOWN"}</strong><br>
-      Balance: ${Number(t.token_info.balance || 0).toFixed(4)}<br>
-      Mint: <code>${t.token_info.mint}</code><br>
-      <button onclick="alert('Burn token coming soon')">Burn Token</button>
+      <strong>${token.token_info.symbol || "Unknown"}</strong><br/>
+      Balance: ${Number(token.token_info.balance).toFixed(4)}<br/>
+      Mint: <code>${token.token_info.mint}</code><br/>
+      <button onclick="alert('Burn function coming soon')">Burn Token</button>
     `;
     tokenList.appendChild(div);
   });
@@ -98,17 +113,19 @@ function displayNFTs(nfts) {
     nftList.innerHTML = '<p>No NFTs found.</p>';
     return;
   }
+
   nfts.forEach(nft => {
-    const name = nft.content?.metadata?.name || "Unnamed NFT";
-    const img = nft.content?.links?.image || "";
-    const mint = nft.token_info?.mint || nft.id;
     const div = document.createElement("div");
     div.className = "nft-card";
     div.innerHTML = `
-      <img src="${img}" alt="NFT"/><br>
-      <strong>${name}</strong><br/>
-      Mint: <code>${mint}</code>
+      <img src="${nft.content?.links?.image || ''}" alt="NFT" /><br/>
+      <strong>${nft.content.metadata.name}</strong><br/>
+      Mint: <code>${nft.token_info.mint}</code>
     `;
     nftList.appendChild(div);
   });
+}
+
+function displaySerumAccounts() {
+  serumList.innerHTML = '<p>Coming soon: Serum account cleanup.</p>';
 }
