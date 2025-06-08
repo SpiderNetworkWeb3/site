@@ -8,10 +8,22 @@
   <link rel="stylesheet" href="cleaner.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" />
   <script type="module" src="cleaner.js" defer></script>
+  <style>
+    #tsparticles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Background Animation -->
+  <!-- Particles Background -->
+  <div id="tsparticles"></div>
+
+  <!-- Solana Web SVG Overlay -->
   <div class="web-bg">
     <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -42,7 +54,7 @@
   <!-- Floating Tool Strip -->
   <aside class="tool-strip">
     <a href="cleaner.html" class="tool-icon" title="Cleaner Tool">
-      <img src="IMG_4270.png" alt="Cleaner Tool" />
+      <img src="assets/icons/cleaner-icon.png" alt="Cleaner Tool" />
       <span class="tool-label">Cleaner</span>
     </a>
   </aside>
@@ -60,7 +72,7 @@
     </nav>
   </header>
 
-  <!-- Token Cleaner App -->
+  <!-- Cleaner App Content -->
   <main class="section-card" style="margin-top: 100px;">
     <h2>SolSpider Token Cleaner</h2>
     <p>Connect your wallet to manage and clean up unwanted tokens and accounts.</p>
@@ -91,5 +103,42 @@
       <button id="proceedBtn" class="cta-glow">Proceed</button>
     </div>
   </div>
+
+  <!-- tsparticles Loader -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+  <script>
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: true },
+      particles: {
+        number: { value: 60 },
+        color: { value: "#9945ff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.6 },
+        size: { value: 2 },
+        move: { enable: true, speed: 0.7 }
+      },
+      background: { color: "#0d0d17" }
+    });
+  </script>
+
+  <!-- Wallet Connect Fix -->
+  <script>
+    document.getElementById("connectWallet").onclick = async () => {
+      if (window.solana && window.solana.isPhantom) {
+        try {
+          const resp = await window.solana.connect();
+          window.wallet = window.solana;
+          document.getElementById("walletInfo").style.display = "block";
+          if (typeof fetchWalletData === "function") {
+            fetchWalletData(resp.publicKey);
+          }
+        } catch (err) {
+          alert("Wallet connection failed.");
+        }
+      } else {
+        alert("Please install Phantom Wallet to use this feature.");
+      }
+    };
+  </script>
 </body>
 </html>
