@@ -352,7 +352,29 @@ button:hover {
     padding: 1.5rem;
   }
 
+  .gradient-text {
+  background: linear-gradient(135deg, var(--spider-accent-2), var(--spider-accent-3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  font-weight: 800;
+}
+
+  .gradient-text {
+  background: linear-gradient(270deg, var(--spider-accent-1), var(--spider-accent-3), var(--spider-accent-4));
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
+  /* same clip settings as above */
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
   body:not(#home) section:first-of-type {
-    padding-top: 110px;
+    padding-top: 120px;
   }
 }
