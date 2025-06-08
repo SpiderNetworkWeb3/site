@@ -254,4 +254,80 @@ section p {
   .hero-content p {
     font-size: 1rem;
   }
+
+  .tool-strip {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  background: rgba(13, 13, 23, 0.85);
+  padding: 0.5rem 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 999;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.tool-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tool-icon img {
+  width: 28px;
+  height: 28px;
+  transition: transform 0.2s ease;
+}
+
+.tool-icon:hover img {
+  transform: scale(1.15);
+}
+
+.tool-label {
+  color: #eaeaea;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tool-icon:hover .tool-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 600px) {
+  .tool-strip {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 0;
+    background: rgba(13, 13, 23, 0.9);
+    padding: 0.25rem;
+  }
+
+  .tool-icon {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .tool-label {
+    opacity: 1;
+    transform: none;
+    font-size: 12px;
+  }
+}
 }
