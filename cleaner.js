@@ -119,3 +119,18 @@ function displayNFTs(nfts) {
 function displaySerumAccounts() {
   serumList.innerHTML = '<p>Coming soon: Serum account cleanup.</p>';
 }
+
+// Modal toggle logic
+const modal = document.getElementById('modal');
+const cancelBtn = document.getElementById('cancelBtn');
+const proceedBtn = document.getElementById('proceedBtn');
+
+cancelBtn.addEventListener('click', () => {
+  modal.classList.add('hidden');
+});
+
+proceedBtn.addEventListener('click', () => {
+  modal.classList.add('hidden'); // ✅ Hides modal on proceed now
+});
+
+}
