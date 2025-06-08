@@ -36,6 +36,7 @@
   text-align: center;
   box-shadow: 0 0 20px var(--spider-accent-3);
 }
-.hidden {
+.modal.hidden {
   display: none;
+}
 }
