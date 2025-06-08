@@ -133,4 +133,23 @@ proceedBtn.addEventListener('click', () => {
   modal.classList.add('hidden'); // ✅ Hides modal on proceed now
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('modal');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const proceedBtn = document.getElementById('proceedBtn');
+
+  // Cancel = redirect to homepage
+  cancelBtn.addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+
+  // Proceed = hide modal
+  proceedBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+  });
+
+  // Show modal on page load
+  modal.classList.remove('hidden');
+});
+
 }
