@@ -121,24 +121,29 @@
     });
   </script>
 
-  <!-- Wallet Connect Fix -->
-  <script>
-    document.getElementById("connectWallet").onclick = async () => {
-      if (window.solana && window.solana.isPhantom) {
-        try {
-          const resp = await window.solana.connect();
-          window.wallet = window.solana;
-          document.getElementById("walletInfo").style.display = "block";
-          if (typeof fetchWalletData === "function") {
-            fetchWalletData(resp.publicKey);
-          }
-        } catch (err) {
-          alert("Wallet connection failed.");
+<script>
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  document.getElementById("connectWallet").onclick = async () => {
+    if (window.solana && window.solana.isPhantom) {
+      try {
+        const resp = await window.solana.connect();
+        window.wallet = window.solana;
+        document.getElementById("walletInfo").style.display = "block";
+        if (typeof fetchWalletData === "function") {
+          fetchWalletData(resp.publicKey);
         }
-      } else {
-        alert("Please install Phantom Wallet to use this feature.");
+      } catch (err) {
+        alert("Wallet connection failed.");
       }
-    };
-  </script>
+    } else if (isMobile) {
+      // Redirect to Phantom mobile deep link with return URI
+      const dappUrl = encodeURIComponent(window.location.href);
+      window.location.href = `https://phantom.app/ul/browse/${dappUrl}`;
+    } else {
+      alert("Phantom Wallet not detected. Please install Phantom to connect.");
+    }
+  };
+</script>
 </body>
 </html>
