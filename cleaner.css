@@ -1,1 +1,41 @@
-
+.wallet-section {
+  margin-top: 3rem;
+}
+.token-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem auto;
+  max-width: 960px;
+}
+.token-card {
+  background: #191926;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 250px;
+  box-shadow: 0 0 10px var(--spider-accent-2);
+  transition: transform 0.2s;
+}
+.token-card:hover {
+  transform: scale(1.05);
+}
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal-content {
+  background: #111;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 0 20px var(--spider-accent-3);
+}
+.hidden {
+  display: none;
+}
