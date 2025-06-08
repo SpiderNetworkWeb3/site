@@ -1,8 +1,14 @@
+import {
+  Connection,
+  PublicKey
+} from "@solana/web3.js";
+
 const heliusEndpoint = "https://mainnet.helius-rpc.com/?api-key=4a24a1d6-8411-4b75-9524-24962846e3de";
 const heliusAssetEndpoint = "https://api.helius.xyz/v0/addresses/";
 
 let walletPublicKey = null;
 
+// DOM Elements
 const connectButton = document.getElementById("connectWallet");
 const walletInfoDiv = document.getElementById("walletInfo");
 const solBalanceSpan = document.getElementById("solBalance");
@@ -10,24 +16,7 @@ const tokenList = document.getElementById("tokenList");
 const nftList = document.getElementById("nftList");
 const serumList = document.getElementById("serumList");
 
-// Modal logic — fixed scope + visibility
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('modal');
-  const cancelBtn = document.getElementById('cancelBtn');
-  const proceedBtn = document.getElementById('proceedBtn');
-
-  modal.classList.remove('hidden'); // Show modal on load
-
-  cancelBtn.addEventListener('click', () => {
-    window.location.href = 'index.html';
-  });
-
-  proceedBtn.addEventListener('click', () => {
-    modal.classList.add('hidden');
-  });
-});
-
-// Wallet connect logic
+// Connect to Phantom Wallet
 connectButton.addEventListener("click", async () => {
   if (!window.solana?.isPhantom) {
     alert("Phantom Wallet not found. Please install it.");
@@ -45,13 +34,17 @@ connectButton.addEventListener("click", async () => {
   }
 });
 
+// Fetch wallet info
 async function fetchWalletInfo(address) {
   try {
-    const connection = new solanaWeb3.Connection(heliusEndpoint);
-    const solBalanceLamports = await connection.getBalance(new solanaWeb3.PublicKey(address));
+    const connection = new Connection(heliusEndpoint);
+
+    // SOL Balance
+    const solBalanceLamports = await connection.getBalance(new PublicKey(address));
     const solBalance = solBalanceLamports / 1e9;
     solBalanceSpan.textContent = solBalance.toFixed(3) + " SOL";
 
+    // Assets from Helius
     const response = await fetch(`${heliusAssetEndpoint}${address}/assets?api-key=4a24a1d6-8411-4b75-9524-24962846e3de`);
     const data = await response.json();
 
@@ -60,13 +53,14 @@ async function fetchWalletInfo(address) {
 
     displayTokens(tokens);
     displayNFTs(nfts);
-    displaySerumAccounts();
+    displaySerumAccounts(); // placeholder
   } catch (error) {
     console.error("Error fetching wallet info:", error);
     alert("Failed to fetch wallet data. Check console.");
   }
 }
 
+// Token display
 function displayTokens(tokens) {
   tokenList.innerHTML = '';
   if (!tokens.length) {
@@ -87,6 +81,7 @@ function displayTokens(tokens) {
   });
 }
 
+// NFT display
 function displayNFTs(nfts) {
   nftList.innerHTML = '';
   if (!nfts.length) {
@@ -106,6 +101,28 @@ function displayNFTs(nfts) {
   });
 }
 
+// Placeholder for Serum cleanup
 function displaySerumAccounts() {
   serumList.innerHTML = '<p>Coming soon: Serum account cleanup.</p>';
 }
+
+// Modal logic (security notice)
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('modal');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const proceedBtn = document.getElementById('proceedBtn');
+
+  // Show modal on load
+  modal.classList.remove('hidden');
+
+  // Cancel = redirect to homepage
+  cancelBtn.addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+
+  // Proceed = hide modal
+  proceedBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    console.log('User accepted disclaimer.');
+  });
+});
