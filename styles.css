@@ -41,7 +41,12 @@ nav {
 }
 
 nav a {
-  color: var(--spider-accent-3);
+  color:linear-gradient(135deg, var(--spider-accent-1), var(--spider-accent-3), var(--spider-accent-4));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: gradientGlow 6s ease-in-out infinite;
   text-decoration: none;
   font-weight: 700;
   font-size: 1rem;
@@ -58,7 +63,12 @@ nav a::after {
   bottom: 4px;
   width: 0;
   height: 2px;
-  background: var(--spider-accent-3);
+  background: linear-gradient(135deg, var(--spider-accent-1), var(--spider-accent-3), var(--spider-accent-4));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: gradientGlow 6s ease-in-out infinite;
   transition: width 0.3s ease, left 0.3s ease;
   border-radius: 2px;
 }
