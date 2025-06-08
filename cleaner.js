@@ -1,8 +1,3 @@
-import {
-  Connection,
-  PublicKey
-} from "@solana/web3.js";
-
 const heliusEndpoint = "https://mainnet.helius-rpc.com/?api-key=4a24a1d6-8411-4b75-9524-24962846e3de";
 const heliusAssetEndpoint = "https://api.helius.xyz/v0/addresses/";
 
@@ -15,27 +10,27 @@ const solBalanceSpan = document.getElementById("solBalance");
 const tokenList = document.getElementById("tokenList");
 const nftList = document.getElementById("nftList");
 const serumList = document.getElementById("serumList");
-
-// Modal Elements
 const modal = document.getElementById("modal");
 const cancelBtn = document.getElementById("cancelBtn");
 const proceedBtn = document.getElementById("proceedBtn");
 
-// Modal logic
+// Modal control
 document.addEventListener("DOMContentLoaded", () => {
-  // Show modal by default
+  // Show modal on load
   modal.classList.remove("hidden");
 
+  // Cancel: return to home
   cancelBtn.addEventListener("click", () => {
     window.location.href = "index.html";
   });
 
+  // Proceed: hide modal
   proceedBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
+    modal.style.display = "none";
   });
 });
 
-// Connect Wallet
+// Connect to Phantom Wallet
 connectButton.addEventListener("click", async () => {
   if (!window.solana?.isPhantom) {
     alert("Phantom Wallet not found. Please install it.");
@@ -45,25 +40,25 @@ connectButton.addEventListener("click", async () => {
   try {
     const resp = await window.solana.connect();
     walletPublicKey = resp.publicKey.toString();
-    console.log("Connected:", walletPublicKey);
+    console.log("Connected wallet:", walletPublicKey);
     walletInfoDiv.style.display = "block";
     fetchWalletInfo(walletPublicKey);
   } catch (err) {
-    console.error("Connection failed:", err);
+    console.error("Wallet connection failed:", err);
   }
 });
 
 // Fetch wallet info
 async function fetchWalletInfo(address) {
   try {
-    const connection = new Connection(heliusEndpoint);
+    const connection = new solanaWeb3.Connection(heliusEndpoint);
 
-    // Fetch SOL Balance
-    const solBalanceLamports = await connection.getBalance(new PublicKey(address));
+    // 1. SOL Balance
+    const solBalanceLamports = await connection.getBalance(new solanaWeb3.PublicKey(address));
     const solBalance = solBalanceLamports / 1e9;
     solBalanceSpan.textContent = solBalance.toFixed(3) + " SOL";
 
-    // Fetch token & NFT assets
+    // 2. Assets via Helius API
     const response = await fetch(`${heliusAssetEndpoint}${address}/assets?api-key=4a24a1d6-8411-4b75-9524-24962846e3de`);
     const data = await response.json();
 
@@ -72,10 +67,10 @@ async function fetchWalletInfo(address) {
 
     displayTokens(tokens);
     displayNFTs(nfts);
-    displaySerumAccounts(); // Placeholder
-  } catch (err) {
-    console.error("Wallet fetch error:", err);
-    alert("Could not load wallet info. Check console.");
+    displaySerumAccounts(); // placeholder
+  } catch (error) {
+    console.error("Error fetching wallet info:", error);
+    alert("Failed to fetch wallet data. See console for details.");
   }
 }
 
@@ -110,7 +105,7 @@ function displayNFTs(nfts) {
     const div = document.createElement("div");
     div.className = "nft-card";
     div.innerHTML = `
-      <img src="${nft.content?.links?.image || ''}" alt="NFT Image" /><br/>
+      <img src="${nft.content?.links?.image || ''}" alt="NFT" /><br/>
       <strong>${nft.content.metadata.name}</strong><br/>
       Mint: <code>${nft.token_info.mint}</code>
     `;
