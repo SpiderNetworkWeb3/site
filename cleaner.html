@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SolSpider Token Cleaner</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="cleaner.css" />
+  <script type="module" src="cleaner.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>🕷️ SolSpider Token Cleaner</h1>
+  </header>
+
+  <main class="section-card">
+    <div class="wallet-section">
+      <button id="connectWallet">Connect Wallet</button>
+
+      <div id="walletInfo" style="display:none;">
+        <p>SOL Balance: <span id="solBalance">--</span></p>
+
+        <h2>Your SPL Tokens</h2>
+        <div id="tokenList" class="token-list"></div>
+
+        <h2>Your NFTs</h2>
+        <div id="nftList" class="token-list"></div>
+
+        <h2>Close Serum Accounts</h2>
+        <div id="serumList" class="token-list"></div>
+      </div>
+    </div>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <p id="modalMessage"></p>
+      <button id="cancelBtn">Cancel</button>
+      <button id="proceedBtn">Proceed</button>
+    </div>
+  </div>
+</body>
+</html>
