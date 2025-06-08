@@ -3,28 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SolSpider Token Cleaner</title>
+  <title>SolSpider Cleaner Tool</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="cleaner.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <script type="module" src="cleaner.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.88.1/lib/index.iife.min.js"></script>
   <style>
-    #tsparticles {
+    main.section-card {
+      margin-top: 7rem;
+      padding: 2rem 1rem;
+    }
+
+    .wallet-section {
+      max-width: 1000px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .wallet-section h2 {
+      margin-top: 3rem;
+    }
+
+    .token-list, .nft-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 1rem 0;
+    }
+
+    .token-card, .nft-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(153, 69, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      text-align: center;
+      font-size: 0.95rem;
+      color: #eaeaea;
+      transition: transform 0.3s ease;
+    }
+
+    .token-card:hover, .nft-card:hover {
+      transform: scale(1.03);
+    }
+
+    .token-card code,
+    .nft-card code {
+      font-size: 0.8rem;
+      word-break: break-all;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .token-card button {
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      background: var(--spider-accent-3);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .token-card button:hover {
+      background: var(--spider-accent-4);
+    }
+
+    .nft-card img {
+      width: 80px;
+      height: auto;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+    }
+
+    #modal {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: #1a1a1f;
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .modal-content button {
+      margin: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #cancelBtn {
+      background: #444;
+      color: #fff;
+    }
+
+    #proceedBtn {
+      background: var(--spider-accent-3);
+      color: #fff;
+    }
+
+    .modal.hidden {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .token-list, .nft-list {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Top Navbar -->
+  <header id="navbar">
+    <div class="logo">
+      <img src="IMG_4238.png" alt="Spider Network Logo" class="logo-img" />
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="tokenomics.html">Tokenomics</a>
+      <a href="trading.html">Trading</a>
+      <a href="whitepaper.html">Whitepaper</a>
+      <a href="dao.html">DAO Platform</a>
+    </nav>
+  </header>
 
-  <!-- Particles Background -->
-  <div id="tsparticles"></div>
-
-  <!-- Solana Web SVG Overlay -->
+  <!-- Animated Background Web Layer -->
   <div class="web-bg">
     <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -35,15 +154,9 @@
         </linearGradient>
       </defs>
       <g fill="none" stroke="url(#solanaGradient)" stroke-width="0.5">
-        <circle cx="400" cy="400" r="50">
-          <animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="400" cy="400" r="100">
-          <animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="400" cy="400" r="150">
-          <animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" />
-        </circle>
+        <circle cx="400" cy="400" r="50"><animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" /></circle>
+        <circle cx="400" cy="400" r="100"><animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" /></circle>
+        <circle cx="400" cy="400" r="150"><animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" /></circle>
         <line x1="400" y1="0" x2="400" y2="800" />
         <line x1="0" y1="400" x2="800" y2="400" />
         <line x1="100" y1="100" x2="700" y2="700" />
@@ -52,43 +165,20 @@
     </svg>
   </div>
 
-  <!-- Floating Tool Strip -->
-  <aside class="tool-strip">
-    <a href="cleaner.html" class="tool-icon" title="Cleaner Tool">
-      <img src="assets/icons/cleaner-icon.png" alt="Cleaner Tool" />
-      <span class="tool-label">Cleaner</span>
-    </a>
-  </aside>
-
-  <!-- Navigation Header -->
-  <header>
-    <div class="logo" style="display: flex; flex-direction: column; align-items: center;">
-      <img src="IMG_4238.png" alt="Spider Network Logo" class="logo-img" />
-    </div>
-    <nav>
-      <a href="tokenomics.html">Tokenomics</a>
-      <a href="trading.html">Trading</a>
-      <a href="whitepaper.html">Whitepaper</a>
-      <a href="dao.html">DAO Platform</a>
-    </nav>
-  </header>
-
-  <!-- Cleaner App Content -->
-  <main class="section-card" style="margin-top: 100px;">
-    <h2>SolSpider Token Cleaner</h2>
-    <p>Connect your wallet to manage and clean up unwanted tokens and accounts.</p>
-
+  <!-- Main Tool Content -->
+  <main class="section-card">
     <div class="wallet-section">
-      <button id="connectWallet" class="cta-glow">Connect Wallet</button>
+      <h1 class="gradient-text">🧹 SolSpider Cleaner</h1>
+      <button class="cta-glow" id="connectWallet">Connect Wallet</button>
 
-      <div id="walletInfo" style="display:none; margin-top: 2rem;">
+      <div id="walletInfo" style="display:none;">
         <p>SOL Balance: <span id="solBalance">--</span></p>
 
         <h2>Your SPL Tokens</h2>
         <div id="tokenList" class="token-list"></div>
 
         <h2>Your NFTs</h2>
-        <div id="nftList" class="token-list"></div>
+        <div id="nftList" class="nft-list"></div>
 
         <h2>Close Serum Accounts</h2>
         <div id="serumList" class="token-list"></div>
@@ -96,55 +186,13 @@
     </div>
   </main>
 
-  <!-- Modal for Confirmations -->
+  <!-- Modal -->
   <div id="modal" class="modal hidden">
     <div class="modal-content">
       <p id="modalMessage"></p>
-      <button id="cancelBtn" class="cta-glow" style="margin-right: 1rem;">Cancel</button>
-      <button id="proceedBtn" class="cta-glow">Proceed</button>
+      <button id="cancelBtn">Cancel</button>
+      <button id="proceedBtn">Proceed</button>
     </div>
   </div>
-
-  <!-- tsparticles Loader -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
-  <script>
-    tsParticles.load("tsparticles", {
-      fullScreen: { enable: true },
-      particles: {
-        number: { value: 60 },
-        color: { value: "#9945ff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.6 },
-        size: { value: 2 },
-        move: { enable: true, speed: 0.7 }
-      },
-      background: { color: "#0d0d17" }
-    });
-  </script>
-
-<script>
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-  document.getElementById("connectWallet").onclick = async () => {
-    if (window.solana && window.solana.isPhantom) {
-      try {
-        const resp = await window.solana.connect();
-        window.wallet = window.solana;
-        document.getElementById("walletInfo").style.display = "block";
-        if (typeof fetchWalletData === "function") {
-          fetchWalletData(resp.publicKey);
-        }
-      } catch (err) {
-        alert("Wallet connection failed.");
-      }
-    } else if (isMobile) {
-      // Redirect to Phantom mobile deep link with return URI
-      const dappUrl = encodeURIComponent(window.location.href);
-      window.location.href = `https://phantom.app/ul/browse/${dappUrl}`;
-    } else {
-      alert("Phantom Wallet not detected. Please install Phantom to connect.");
-    }
-  };
-</script>
 </body>
 </html>
