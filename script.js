@@ -1,71 +1,145 @@
-// Initialize Animate On Scroll
-AOS.init({
-  duration: 800,
-  easing: 'ease-in-out',
-  once: true
+const { Connection, PublicKey } = solanaWeb3;
+
+const heliusRpcUrl = "https://mainnet.helius-rpc.com/?api-key=4a24a1d6-8411-4b75-9524-24962846e3de";
+
+let walletPublicKey = null;
+
+// DOM elements
+const connectButton = document.getElementById("connectWallet");
+const walletInfoDiv = document.getElementById("walletInfo");
+const solBalanceSpan = document.getElementById("solBalance");
+const tokenList = document.getElementById("tokenList");
+const nftList = document.getElementById("nftList");
+const serumList = document.getElementById("serumList");
+
+const modal = document.getElementById("confirmationModal");
+const cancelBtn = document.getElementById("cancelBtn");
+const proceedBtn = document.getElementById("proceedBtn");
+
+// Modal behavior
+document.addEventListener("DOMContentLoaded", () => {
+  modal.classList.remove("hidden");
+
+  cancelBtn.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+
+  proceedBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
 });
 
-// Navbar shrink effect on scroll
-window.addEventListener("scroll", () => {
-  const nav = document.getElementById("navbar");
-  if (window.scrollY > 50) {
-    nav.style.padding = "0.8rem 2rem";
-    nav.style.background = "rgba(11, 11, 18, 0.98)";
-  } else {
-    nav.style.padding = "1.2rem 2rem";
-    nav.style.background = "#0b0b12"; // solid to match logo background
+// Connect to Phantom wallet
+connectButton.addEventListener("click", async () => {
+  try {
+    if (!window.solana || !window.solana.isPhantom) {
+      alert("Phantom Wallet not found. Please open this page in the Phantom browser.");
+      return;
+    }
+
+    const resp = await window.solana.connect();
+    walletPublicKey = resp.publicKey.toString();
+    console.log("Connected wallet:", walletPublicKey);
+    walletInfoDiv.style.display = "block";
+
+    fetchWalletInfo(walletPublicKey);
+  } catch (err) {
+    console.error("Wallet connection failed:", err);
+    alert("Could not connect to wallet.");
   }
 });
 
-// Load particles.js background (Solana-inspired)
-tsParticles.load("tsparticles", {
-  fullScreen: { enable: true, zIndex: -2 },
-  particles: {
-    number: { value: 80, density: { enable: true, area: 800 } },
-    color: { value: ["#9945ff", "#19fb9b", "#00ffa3"] }, // spider-accent colors
-    shape: { type: "circle" },
-    opacity: { value: 0.4 },
-    size: { value: 2.5 },
-    links: {
-      enable: true,
-      distance: 130,
-      color: "#9945ff",
-      opacity: 0.3,
-      width: 1
-    },
-    move: {
-      enable: true,
-      speed: 1.2,
-      outModes: { default: "bounce" }
-    }
-  },
-  interactivity: {
-    events: {
-      onHover: { enable: true, mode: "repulse" },
-      onClick: { enable: true, mode: "push" }
-    },
-    modes: {
-      repulse: { distance: 100 },
-      push: { quantity: 4 }
-    }
-  },
-  detectRetina: true
-});
+// Fetch wallet data using POST
+async function fetchWalletInfo(address) {
+  try {
+    const connection = new Connection(heliusRpcUrl);
+    const solBalanceLamports = await connection.getBalance(new PublicKey(address));
+    const solBalance = solBalanceLamports / 1e9;
+    solBalanceSpan.textContent = solBalance.toFixed(5) + " SOL";
 
-// Rotating slogan logic
-const slogans = [
-  "Empowering Builders.",
-  "Web3 dApps. Real Utility.",
-  "Grants. Governance. Growth.",
-  "Built on Solana. Designed for Scale."
-];
-const rotator = document.querySelector(".rotator");
-let current = 0;
+    const response = await fetch(heliusRpcUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: "1",
+        method: "getAssetsByOwner",
+        params: {
+          ownerAddress: address,
+          page: 1,
+          limit: 100,
+          sortBy: { sortBy: "created", sortDirection: "asc" },
+          options: {
+            showUnverifiedCollections: true,
+            showCollectionMetadata: true,
+            showGrandTotal: false,
+            showFungible: true,
+            showNativeBalance: false,
+            showInscription: false,
+            showZeroBalance: false
+          }
+        }
+      })
+    });
 
-function rotateSlogan() {
-  if (!rotator) return;
-  rotator.innerHTML = `<span>${slogans[current]}</span>`;
-  current = (current + 1) % slogans.length;
+    const data = await response.json();
+    const items = data.result?.items;
+
+    if (!items || !Array.isArray(items)) {
+      throw new Error("Unexpected response format from Helius.");
+    }
+
+    const tokens = items.filter(item => item.token_info?.decimals > 0);
+    const nfts = items.filter(item => item.interface === "V1_NFT");
+
+    displayTokens(tokens);
+    displayNFTs(nfts);
+    displaySerumAccounts(); // placeholder
+  } catch (err) {
+    console.error("Fetch error:", err);
+    alert("Failed to fetch wallet data. Check console.");
+  }
 }
-rotateSlogan();
-setInterval(rotateSlogan, 3500);
+
+function displayTokens(tokens) {
+  tokenList.innerHTML = '';
+  if (!tokens.length) {
+    tokenList.innerHTML = '<p>No SPL tokens found.</p>';
+    return;
+  }
+
+  tokens.forEach(token => {
+    const div = document.createElement("div");
+    div.className = "token-card";
+    div.innerHTML = `
+      <strong>${token.token_info.symbol || "Unknown"}</strong><br/>
+      Balance: ${Number(token.token_info.balance).toFixed(4)}<br/>
+      Mint: <code>${token.token_info.mint}</code><br/>
+      <button onclick="alert('Burn function coming soon')">🔥 Burn</button>
+    `;
+    tokenList.appendChild(div);
+  });
+}
+
+function displayNFTs(nfts) {
+  nftList.innerHTML = '';
+  if (!nfts.length) {
+    nftList.innerHTML = '<p>No NFTs found.</p>';
+    return;
+  }
+
+  nfts.forEach(nft => {
+    const div = document.createElement("div");
+    div.className = "token-card";
+    div.innerHTML = `
+      <img src="${nft.content?.links?.image || ''}" alt="NFT" width="100"/><br/>
+      <strong>${nft.content?.metadata?.name || "Unknown NFT"}</strong><br/>
+      Mint: <code>${nft.id}</code>
+    `;
+    nftList.appendChild(div);
+  });
+}
+
+function displaySerumAccounts() {
+  serumList.innerHTML = '<p>Coming soon: Serum account cleanup.</p>';
+}
