@@ -1,52 +1,62 @@
-// particles.js
-document.addEventListener("DOMContentLoaded", () => {
-  tsParticles.load("tsparticles", {
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+<script>
+  const particlesConfig = {
     fullScreen: { enable: true, zIndex: 0 },
     background: { color: "#0d0d17" },
     fpsLimit: 60,
     interactivity: {
+      detectsOn: "canvas",
       events: {
+        onClick: { enable: true, mode: "push" },
         onHover: { enable: true, mode: "grab" },
         resize: true
       },
       modes: {
         grab: {
-          distance: 180,
-          links: { opacity: 0.6 }
-        }
+          distance: 150,
+          links: { opacity: 0.7 }
+        },
+        push: { quantity: 1 }
       }
     },
     particles: {
-      color: { value: ["#00FFA3", "#DC1FFF", "#00FFFB"] },
+      number: {
+        value: 75,
+        density: { enable: true, area: 800 }
+      },
+      color: {
+        value: ["#00FFA3", "#DC1FFF", "#00FFFB", "#9945ff"]
+      },
+      shape: { type: "circle" },
+      opacity: { value: 0.6, random: true },
+      size: { value: { min: 1, max: 4 }, random: true },
       links: {
-        color: "#9945ff",
-        distance: 120,
         enable: true,
-        opacity: 0.4,
-        width: 1.5
+        distance: 130,
+        color: "#00FFA3",
+        opacity: 0.5,
+        width: 1
       },
       move: {
-        direction: "none",
         enable: true,
-        outModes: { default: "bounce" },
+        speed: 1,
+        direction: "none",
         random: false,
-        speed: 0.8,
-        straight: false
-      },
-      number: {
-        density: { enable: true, area: 800 },
-        value: 60
-      },
-      opacity: {
-        value: 0.5
-      },
-      shape: {
-        type: "circle"
-      },
-      size: {
-        value: { min: 1, max: 3 }
+        straight: false,
+        outModes: { default: "bounce" }
       }
     },
     detectRetina: true
+  };
+
+  let spawnCount = 0;
+  tsParticles.load("tsparticles", particlesConfig).then(container => {
+    container.interactivity.element.addEventListener("click", () => {
+      spawnCount++;
+      if (spawnCount >= 75) {
+        container.refresh();
+        spawnCount = 0;
+      }
+    });
   });
-});
+</script>
