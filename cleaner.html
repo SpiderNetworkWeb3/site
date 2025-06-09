@@ -10,7 +10,7 @@
 </head>
 <body>
 
-  <!-- Background SVG (same as index.html) -->
+  <!-- Background -->
   <div id="tsparticles"></div>
   <div class="web-bg">
     <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
@@ -22,15 +22,9 @@
         </linearGradient>
       </defs>
       <g fill="none" stroke="url(#solanaGradient)" stroke-width="0.5">
-        <circle cx="400" cy="400" r="50">
-          <animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="400" cy="400" r="100">
-          <animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="400" cy="400" r="150">
-          <animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" />
-        </circle>
+        <circle cx="400" cy="400" r="50"><animate attributeName="r" values="50;150;50" dur="20s" repeatCount="indefinite" /></circle>
+        <circle cx="400" cy="400" r="100"><animate attributeName="r" values="100;200;100" dur="25s" repeatCount="indefinite" /></circle>
+        <circle cx="400" cy="400" r="150"><animate attributeName="r" values="150;250;150" dur="30s" repeatCount="indefinite" /></circle>
         <line x1="400" y1="0" x2="400" y2="800" />
         <line x1="0" y1="400" x2="800" y2="400" />
         <line x1="100" y1="100" x2="700" y2="700" />
@@ -39,15 +33,19 @@
     </svg>
   </div>
 
-  <!-- Floating Tool Strip -->
-  <aside class="tool-strip">
-    <a href="cleaner.html" class="tool-icon" title="Cleaner Tool">
-      <img src="assets/icons/cleaner-icon.png" alt="Cleaner Tool" />
-      <span class="tool-label">Cleaner</span>
-    </a>
-  </aside>
+  <!-- Modal -->
+  <div id="confirmationModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>⚠️ Caution Required</h2>
+      <p>This tool allows burning and closing accounts. Proceed only if you understand the risks.</p>
+      <div class="modal-buttons">
+        <button id="cancelBtn">Cancel</button>
+        <button id="proceedBtn">Proceed</button>
+      </div>
+    </div>
+  </div>
 
-  <!-- Site Header -->
+  <!-- Header -->
   <header id="navbar">
     <div class="logo" style="display: flex; flex-direction: column; align-items: center;">
       <img src="IMG_4238.png" alt="Spider Network Logo" class="logo-img" />
@@ -60,22 +58,11 @@
     </nav>
   </header>
 
-  <!-- Confirmation Modal -->
-  <div id="confirmationModal" class="modal">
-    <div class="modal-content">
-      <h2>⚠️ Caution Required</h2>
-      <p>This tool allows burning and closing accounts. Proceed only if you understand the risks.</p>
-      <div class="modal-buttons">
-        <button id="cancelBtn">Cancel</button>
-        <button id="proceedBtn">Proceed</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Page Content -->
+  <!-- Main App -->
   <main style="padding-top: 7rem; max-width: 960px; margin: auto;">
     <h1>SolSpider Labs: Wallet Cleaner Tool</h1>
     <button id="connectWallet" class="cta-glow">🔗 Connect Wallet</button>
+
     <div id="walletInfo" class="wallet-section" style="display: none;">
       <p>✅ Wallet connected</p>
       <p><strong>SOL Balance:</strong> <span id="solBalance">0</span></p>
@@ -97,9 +84,7 @@
     </section>
   </main>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script type="module" src="cleaner.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
