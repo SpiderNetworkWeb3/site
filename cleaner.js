@@ -14,11 +14,11 @@ const solBalanceSpan = document.getElementById("solBalance");
 const tokenList = document.getElementById("tokenList");
 const nftList = document.getElementById("nftList");
 const serumList = document.getElementById("serumList");
-const modal = document.getElementById("modal");
+const modal = document.getElementById("confirmationModal");
 const cancelBtn = document.getElementById("cancelBtn");
 const proceedBtn = document.getElementById("proceedBtn");
 
-// Show modal on load
+// Modal Behavior
 document.addEventListener("DOMContentLoaded", () => {
   modal.classList.remove("hidden");
 
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   proceedBtn.addEventListener("click", () => {
-    modal.style.display = "none";
+    modal.classList.add("hidden");
   });
 });
 
@@ -50,17 +50,17 @@ connectButton.addEventListener("click", async () => {
   }
 });
 
-// Fetch Wallet Info from Helius
+// Fetch Wallet Info
 async function fetchWalletInfo(address) {
   try {
     const connection = new Connection(heliusEndpoint);
 
-    // Get SOL balance
+    // SOL Balance
     const solBalanceLamports = await connection.getBalance(new PublicKey(address));
     const solBalance = solBalanceLamports / 1e9;
     solBalanceSpan.textContent = solBalance.toFixed(3) + " SOL";
 
-    // Get token and NFT data
+    // Token + NFT data
     const url = `${heliusAssetEndpoint}${address}/assets?displayOptions=compressed,unlisted&api-key=4a24a1d6-8411-4b75-9524-24962846e3de`;
     const response = await fetch(url);
     const data = await response.json();
@@ -79,14 +79,14 @@ async function fetchWalletInfo(address) {
 
     displayTokens(tokens);
     displayNFTs(nfts);
-    displaySerumAccounts();
+    displaySerumAccounts(); // Placeholder
   } catch (err) {
     console.error("Fetch error:", err);
     alert("Failed to fetch wallet data. Check console.");
   }
 }
 
-// UI Display Functions
+// Display Functions
 function displayTokens(tokens) {
   tokenList.innerHTML = '';
   if (!tokens.length) {
@@ -101,7 +101,7 @@ function displayTokens(tokens) {
       <strong>${token.token_info.symbol || "Unknown"}</strong><br/>
       Balance: ${Number(token.token_info.balance).toFixed(4)}<br/>
       Mint: <code>${token.token_info.mint}</code><br/>
-      <button onclick="alert('Burn function coming soon')">Burn Token</button>
+      <button onclick="alert('Burn function coming soon')">🔥 Burn</button>
     `;
     tokenList.appendChild(div);
   });
@@ -116,9 +116,9 @@ function displayNFTs(nfts) {
 
   nfts.forEach(nft => {
     const div = document.createElement("div");
-    div.className = "nft-card";
+    div.className = "token-card";
     div.innerHTML = `
-      <img src="${nft.content?.links?.image || ''}" alt="NFT" /><br/>
+      <img src="${nft.content?.links?.image || ''}" alt="NFT" width="100"/><br/>
       <strong>${nft.content.metadata.name}</strong><br/>
       Mint: <code>${nft.token_info.mint}</code>
     `;
