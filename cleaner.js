@@ -1,5 +1,3 @@
-// cleaner.js
-
 import { Connection, PublicKey } from "https://unpkg.com/@solana/web3.js@1.76.0/lib/index.iife.js";
 
 const heliusEndpoint = "https://mainnet.helius-rpc.com/?api-key=4a24a1d6-8411-4b75-9524-24962846e3de";
@@ -7,7 +5,7 @@ const heliusAssetEndpoint = "https://api.helius.xyz/v0/addresses/";
 
 let walletPublicKey = null;
 
-// DOM Elements
+// DOM references
 const connectButton = document.getElementById("connectWallet");
 const walletInfoDiv = document.getElementById("walletInfo");
 const solBalanceSpan = document.getElementById("solBalance");
@@ -18,7 +16,7 @@ const modal = document.getElementById("confirmationModal");
 const cancelBtn = document.getElementById("cancelBtn");
 const proceedBtn = document.getElementById("proceedBtn");
 
-// Modal Behavior
+// Modal logic
 document.addEventListener("DOMContentLoaded", () => {
   modal.classList.remove("hidden");
 
@@ -31,17 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Wallet Connect Logic
+// Wallet connection
 connectButton.addEventListener("click", async () => {
   try {
     if (!window.solana || !window.solana.isPhantom) {
-      alert("Phantom Wallet not found. Please install or open in Phantom browser.");
+      alert("Phantom Wallet not found. Please install or use Phantom browser.");
       return;
     }
 
     const resp = await window.solana.connect();
     walletPublicKey = resp.publicKey.toString();
     console.log("Connected wallet:", walletPublicKey);
+
     walletInfoDiv.style.display = "block";
     fetchWalletInfo(walletPublicKey);
   } catch (err) {
@@ -50,24 +49,17 @@ connectButton.addEventListener("click", async () => {
   }
 });
 
-// Fetch Wallet Info
+// Fetch wallet + assets
 async function fetchWalletInfo(address) {
   try {
     const connection = new Connection(heliusEndpoint);
 
-    // SOL Balance
-    const solBalanceLamports = await connection.getBalance(new PublicKey(address));
-    const solBalance = solBalanceLamports / 1e9;
-    solBalanceSpan.textContent = solBalance.toFixed(3) + " SOL";
+    const lamports = await connection.getBalance(new PublicKey(address));
+    solBalanceSpan.textContent = (lamports / 1e9).toFixed(3) + " SOL";
 
-    // Token + NFT data
     const url = `${heliusAssetEndpoint}${address}/assets?displayOptions=compressed,unlisted&api-key=4a24a1d6-8411-4b75-9524-24962846e3de`;
     const response = await fetch(url);
     const data = await response.json();
-
-    if (!data.items || !Array.isArray(data.items)) {
-      throw new Error("Unexpected data format from Helius.");
-    }
 
     const tokens = data.items.filter(item =>
       item.token_info && item.token_info.decimals > 0 && Number(item.token_info.balance) > 0
@@ -79,14 +71,14 @@ async function fetchWalletInfo(address) {
 
     displayTokens(tokens);
     displayNFTs(nfts);
-    displaySerumAccounts(); // Placeholder
+    displaySerumAccounts();
   } catch (err) {
     console.error("Fetch error:", err);
     alert("Failed to fetch wallet data. Check console.");
   }
 }
 
-// Display Functions
+// Render tokens
 function displayTokens(tokens) {
   tokenList.innerHTML = '';
   if (!tokens.length) {
@@ -107,6 +99,7 @@ function displayTokens(tokens) {
   });
 }
 
+// Render NFTs
 function displayNFTs(nfts) {
   nftList.innerHTML = '';
   if (!nfts.length) {
