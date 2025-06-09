@@ -1,6 +1,8 @@
 .wallet-section {
   margin-top: 3rem;
+  text-align: center;
 }
+
 .token-list {
   display: flex;
   flex-wrap: wrap;
@@ -9,6 +11,7 @@
   margin: 1rem auto;
   max-width: 960px;
 }
+
 .token-card {
   background: #191926;
   border-radius: 12px;
@@ -16,27 +19,60 @@
   width: 250px;
   box-shadow: 0 0 10px var(--spider-accent-2);
   transition: transform 0.2s;
+  color: #fff;
+  text-align: center;
 }
+
 .token-card:hover {
   transform: scale(1.05);
 }
+
+.token-card img {
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+/* Modal Style */
 .modal {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.75);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000;
+  justify-content: center;
+  z-index: 10000;
 }
+
 .modal-content {
-  background: #111;
-  border-radius: 10px;
+  background: #1a1a1f;
   padding: 2rem;
+  border-radius: 10px;
+  max-width: 420px;
+  width: 90%;
+  color: #eaeaea;
   text-align: center;
-  box-shadow: 0 0 20px var(--spider-accent-3);
+  box-shadow: 0 0 20px rgba(153, 69, 255, 0.3);
 }
+
+.modal-content button {
+  margin: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#cancelBtn {
+  background: #444;
+  color: #fff;
+}
+
+#proceedBtn {
+  background: var(--spider-accent-3);
+  color: #fff;
+}
+
 .modal.hidden {
   display: none;
-}
 }
