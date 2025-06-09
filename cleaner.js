@@ -45,7 +45,7 @@ window.addEventListener("DOMContentLoaded", () => {
     try {
       const connection = new solanaWeb3.Connection(heliusEndpoint);
       const balance = await connection.getBalance(new solanaWeb3.PublicKey(address));
-      solBalanceSpan.textContent = (balance / 1e9).toFixed(3) + " SOL";
+      solBalanceSpan.textContent = (balance / 1e9).toFixed(5) + " SOL";
 
       const url = `${heliusAssetEndpoint}${address}/assets?displayOptions=compressed,unlisted&api-key=4a24a1d6-8411-4b75-9524-24962846e3de`;
       const response = await fetch(url);
