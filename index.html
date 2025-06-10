@@ -146,53 +146,90 @@
   </script>
 
   <!-- 🕸️ Particle Animation Logic -->
-  <script>
-    let spawnCount = 0;
-
-    tsParticles.load("tsparticles", {
-      fullScreen: { enable: true, zIndex: -1 },
-      background: { color: "#0d0d17" },
-      particles: {
-        number: { value: 75, density: { enable: true, area: 800 } },
-        color: { value: ["#00FFA3", "#DC1FFF", "#00FFFB", "#9945ff"] },
-        shape: { type: "circle" },
-        opacity: { value: 0.6 },
-        size: { value: { min: 1, max: 4 }, random: true },
-        move: {
-          enable: true,
-          speed: 0.75,
-          direction: "none",
-          outModes: "bounce"
-        },
+<script>
+tsParticles.load("tsparticles", {
+  fullScreen: {
+    enable: true,
+    zIndex: -1
+  },
+  background: {
+    color: "#0d0d17"
+  },
+  fpsLimit: 60,
+  interactivity: {
+    events: {
+      onClick: {
+        enable: true,
+        mode: "push"
+      },
+      onHover: {
+        enable: true,
+        mode: "grab"
+      },
+      resize: true
+    },
+    modes: {
+      push: {
+        quantity: 3
+      },
+      grab: {
+        distance: 140,
         links: {
-          enable: true,
-          distance: 130,
-          color: "#00FFA3",
-          opacity: 0.4,
-          width: 1
+          opacity: 0.6
         }
-      },
-      interactivity: {
-        events: {
-          onClick: { enable: true, mode: "push" },
-          onHover: { enable: true, mode: "grab" },
-          resize: true
-        },
-        modes: {
-          push: { quantity: 1 },
-          grab: { distance: 140 }
-        }
-      },
-      detectRetina: true
-    }).then(container => {
-      container.interactivity.element.addEventListener("click", () => {
-        spawnCount++;
-        if (spawnCount >= 75) {
-          container.refresh();
-          spawnCount = 8;
-        }
-      });
-    });
-  </script>
+      }
+    }
+  },
+  particles: {
+    number: {
+      value: 80,
+      limit: 75, // spawn limit
+      density: {
+        enable: true,
+        area: 800
+      }
+    },
+    color: {
+      value: ["#00FFA3", "#DC1FFF", "#00FFFB"]
+    },
+    shape: {
+      type: "circle"
+    },
+    opacity: {
+      value: 0.6,
+      anim: {
+        enable: true,
+        speed: 1,
+        opacity_min: 0.3,
+        sync: false
+      }
+    },
+    size: {
+      value: { min: 1, max: 4 }
+    },
+    links: {
+      enable: true,
+      distance: 130,
+      color: "#ffffff",
+      opacity: 0.2,
+      width: 1
+    },
+    move: {
+      enable: true,
+      speed: 1.2,
+      direction: "none",
+      random: false,
+      straight: false,
+      outMode: "bounce",
+      trail: {
+        enable: true,
+        length: 15,
+        fillColor: "#0d0d17"
+      }
+    }
+  },
+  detectRetina: true
+});
+</script>
 </body>
 </html>
